@@ -1,0 +1,93 @@
+*vim-simple-align.txt*    A Vim plugin to align texts by simple way
+
+==============================================================================
+Table of Contents                         *vim-simple-align-table-of-contents*
+
+Summary         |vim-simple-align-summary|
+Commands        |vim-simple-align-commands|
+Command Options |vim-simple-align-command-options|
+Examples        |vim-simple-align-examples|
+Installation    |vim-simple-align-installation|
+Requirements    |vim-simple-align-requirements|
+
+==============================================================================
+Summary                                             *vim-simple-align-summary*
+
+*vim-simple-align* is a Vim plugin to align texts by simple way.
+
+  * |vim-simple-align| provides only 1 command and a few its options
+  * delimiter used to split texts is always Vim's regular expression
+
+|vim-simple-align| doesn't cover all alignment cases but aims to work nice in
+many common cases.
+
+==============================================================================
+Commands                                           *vim-simple-align-commands*
+
+                                                                *:SimpleAlign*
+|vim-simple-align| provides only 1 command: `:SimpleAlign`.
+
+Usage:
+
+>
+	:{RANGE}SimpleAlign {DELIMITER}[ {OPTIONS}]
+<
+
+Delimiter is Vim's regular expression. Some characters may need to be escaped.
+
+cf. |regular-expression| and |vim-simple-align-command-options|
+
+==============================================================================
+Command Options                             *vim-simple-align-command-options*
+
+                                      *vim-simple-align-command-options-count*
+-count
+	`-count` option means how many times to split texts. Available values
+	are `-1` and integers greater than 0. `-1` means unlimited.
+	Default: `-1`
+
+                                   *vim-simple-align-command-options-lpadding*
+-lpadding
+	`-lpadding` option means how many spaces to put left padding of each
+	token. Available values are integers greater than or equal to 0.
+	Default: `1`
+
+                                   *vim-simple-align-command-options-rpadding*
+-rpadding
+	`-rpadding` option means how many spaces to put right padding of each
+	token. Available values are integers greater than or equal to 0.
+	Default: `1`
+
+                                    *vim-simple-align-command-options-justify*
+-justify
+	`-justify` option means which side tokens should be on. Available
+	values are `left` and `right`.
+	Default: `left`
+
+==============================================================================
+Examples                                           *vim-simple-align-examples*
+
+You can see examples in README.
+
+==============================================================================
+Installation                                   *vim-simple-align-installation*
+
+If you use dein.vim (https://github.com/Shougo/dein.vim):
+
+>
+	call dein#add("kg8m/vim-simple-align")
+<
+
+Note: dein.vim's lazy loading feature with `on_cmd` option is not recommended
+for |vim-simple-align|. You will see `E471: Argument required: ...` if so.
+Anyway, lazy loading of |vim-simple-align| doesn't make Vim's startup faster
+because |vim-simple-align| just defines 1 command when added to `runtimepath`.
+dein.vim's lazy loading with `on_cmd` also defines a dummy command.
+
+==============================================================================
+Requirements                                   *vim-simple-align-requirements*
+
+  * Vim 8.2+
+
+==============================================================================
+vim:tw=78:ts=8:ft=help:norl:noet:fen:fdl=0:
