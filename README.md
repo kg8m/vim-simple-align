@@ -9,6 +9,8 @@ A Vim plugin to align texts by simple way.
 
 vim-simple-align doesn't cover all alignment cases but aims to work nice in many common cases.
 
+![vim-simple-align-demo](https://user-images.githubusercontent.com/694547/110630529-cdcb9880-81e8-11eb-93c1-7c6fed199663.gif)
+
 
 Table of Contents
 --------------------------------------------------
