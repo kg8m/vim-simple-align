@@ -10,35 +10,30 @@ on:
 
 jobs:
   build:
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest]
-        name: [vim-v82-latest, vim-v82-0000]
-        include:
-          - name: vim-v82-latest
-            os: ubuntu-latest
-            vim_version: 8.2.2576
-          - name: vim-v82-0000
-            os: ubuntu-latest
-            vim_version: 8.2.0
-    runs-on: ${{matrix.os}}
+        vim:
+          - v8.2.2000
+          - v8.2.1000
+          - v8.2.0000
     steps:
-      - uses: actions/checkout@v1
-      - name: Download vim
-        shell: bash -xe {0}
-        run: |
-          mkdir -p ~/vim/bin
-          curl -L https://github.com/vim/vim-appimage/releases/download/v${{matrix.vim_version}}/GVim-v${{matrix.vim_version}}.glibc2.15-x86_64.AppImage -o ~/vim/bin/vim
-          chmod u+x ~/vim/bin/vim
-      - name: Download test runner
-        shell: bash -xe {0}
-        run: git clone --depth 1 --single-branch https://github.com/thinca/vim-themis ~/themis
+      - uses: actions/checkout@v2
+      - name: Setup Vim
+        uses: rhysd/action-setup-vim@v1
+        id: vim
+        with:
+          version: ${{ matrix.vim }}
+      - name: Setup vim-themis
+        uses: actions/checkout@v2
+        with:
+          repository: thinca/vim-themis
+          path: vim-themis
       - name: Run tests
         shell: bash -xe {0}
+        env:
+          THEMIS_VIM: ${{ steps.vim.outputs.executable }}
         run: |
-          export PATH=~/vim/bin:$PATH
-          export PATH=~/themis/bin:$PATH
-          export THEMIS_VIM=vim
-          vim --version
-          themis
+          $THEMIS_VIM --version
+          ./vim-themis/bin/themis
