@@ -26,16 +26,16 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: Download vim
-        shell: bash
+        shell: bash -xe {0}
         run: |
           mkdir -p ~/vim/bin
           curl -L https://github.com/vim/vim-appimage/releases/download/v${{matrix.vim_version}}/GVim-v${{matrix.vim_version}}.glibc2.15-x86_64.AppImage -o ~/vim/bin/vim
           chmod u+x ~/vim/bin/vim
       - name: Download test runner
-        shell: bash
+        shell: bash -xe {0}
         run: git clone --depth 1 --single-branch https://github.com/thinca/vim-themis ~/themis
       - name: Run tests
-        shell: bash
+        shell: bash -xe {0}
         run: |
           export PATH=~/vim/bin:$PATH
           export PATH=~/themis/bin:$PATH
