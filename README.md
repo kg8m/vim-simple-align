@@ -403,4 +403,4 @@ Note: dein.vim's lazy loading feature with `on_cmd` option is not recommended fo
 Requirements
 --------------------------------------------------
 
-* Vim 8.2+
+Vim 8.2+ or Neovim nightly
