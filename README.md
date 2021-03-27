@@ -49,7 +49,7 @@ cf. `:h regular-expression`
 
 #### `-count` option
 
-`-count` option means how many times to split texts. Available values are `-1` and integers greater than 0. `-1` means unlimited.
+`-count` option means how many times to split and align tokens. Available values are `-1` and integers greater than 0. `-1` means unlimited.
 
 Default: `-1`
 
