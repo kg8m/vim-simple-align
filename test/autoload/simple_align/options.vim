@@ -283,7 +283,6 @@ function s:argument_to_name.trims_leading_hyphens() abort
   endfor
 endfunction
 
-
 let s:normalize_value = themis#suite("simple_align#options#normalize_value")
 function s:normalize_value.normalize_option_value() abort
   let testcases = [
