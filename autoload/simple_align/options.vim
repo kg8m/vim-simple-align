@@ -36,7 +36,7 @@ let s:VALUE_CANDIDATES = #{
 function simple_align#options#completion_candidates(arglead, cmdline, curpos) abort
   let leading_chars       = a:cmdline[0 : a:curpos - 1]
   let leading_arg_pattern = a:arglead ==# "" ? '\v\S+\s+$' : '\v\S+$'
-  let leading_arg         = matchstr(leading_chars, leading_arg_pattern)->trim()
+  let leading_arg         = trim(matchstr(leading_chars, leading_arg_pattern))
 
   if simple_align#options#is_option(leading_arg)
     let option_name = simple_align#options#argument_to_name(leading_arg)
@@ -50,7 +50,7 @@ function simple_align#options#completion_candidates(arglead, cmdline, curpos) ab
     if a:arglead ==# ""
       return s:LIST
     else
-      let prev_leading_arg = leading_chars->substitute('\v\s+\S+$', "", "")->matchstr('\v\S+$')->trim()
+      let prev_leading_arg = trim(matchstr(substitute(leading_chars, '\v\s+\S+$', "", ""), '\v\S+$'))
 
       if simple_align#options#is_option(prev_leading_arg)
         let option_name    = simple_align#options#argument_to_name(prev_leading_arg)
@@ -59,7 +59,7 @@ function simple_align#options#completion_candidates(arglead, cmdline, curpos) ab
         let all_candidates = s:LIST
       endif
 
-      return all_candidates->copy()->filter("v:val =~# '^' .. a:arglead")
+      return filter(copy(all_candidates), "v:val =~# '^' .. a:arglead")
     endif
   endif
 endfunction

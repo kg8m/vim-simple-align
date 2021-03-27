@@ -13,13 +13,13 @@ endfunction
 
 function s:format(firstlnum, tokens_list, token_widths, options) abort
   let lastline = a:firstlnum + len(a:tokens_list) - 1
-  let lines    = a:tokens_list->copy()->map("s:tokens_to_line(a:firstlnum + v:key, v:val, a:token_widths, a:options)")
+  let lines    = map(copy(a:tokens_list), "s:tokens_to_line(a:firstlnum + v:key, v:val, a:token_widths, a:options)")
 
   call setline(a:firstlnum, lines)
 endfunction
 
 function s:tokens_to_line(lnum, tokens, token_widths, options) abort
-  let indent = getline(a:lnum)->matchstr('^\s*')
+  let indent = matchstr(getline(a:lnum), '^\s*')
   let line   = ""
 
   if a:token_widths[0] ># 0

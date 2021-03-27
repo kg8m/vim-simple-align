@@ -1,5 +1,5 @@
 function simple_align#tokenizer#lines_to_tokens_list(lines, delimiter, options) abort
-  return a:lines->copy()->map("s:line_to_tokens(v:val, a:delimiter, a:options)")
+  return map(copy(a:lines), "s:line_to_tokens(v:val, a:delimiter, a:options)")
 endfunction
 
 function s:line_to_tokens(line, delimiter, options) abort
@@ -32,7 +32,7 @@ function s:split(line, delimiter, options) abort
     if a:options.count ==# 1
       return [lhs, delimiter, rhs]
     elseif a:options.count ># 1
-      let options = a:options->copy()->extend(#{ count: a:options.count - 1 })
+      let options = extend(copy(a:options), #{ count: a:options.count - 1 })
       return [lhs, delimiter] + s:split(rhs, a:delimiter, options)
     else
       return [lhs, delimiter] + s:split(rhs, a:delimiter, a:options)

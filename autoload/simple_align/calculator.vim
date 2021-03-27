@@ -2,7 +2,7 @@ function simple_align#calculator#calculate_token_widths(tokens_list) abort
   let widths = []
 
   for tokens in a:tokens_list
-    let token_widths = tokens->copy()->map("strdisplaywidth(v:val)")
+    let token_widths = map(copy(tokens), "strdisplaywidth(v:val)")
     let n = len(token_widths)
     let i = 0
 

@@ -63,7 +63,7 @@ function s:format.aligns_tokens_with_spaces_around_each_delimiter_depending_on_p
   let firstlnum    = 1
   let lastlnum     = firstlnum + 3
   let lines        = simple_align#lines#get(firstlnum, lastlnum)
-  let options      = extend(simple_align#options#default_values()->copy(), #{ lpadding: 0, rpadding: 0 })
+  let options      = extend(copy(simple_align#options#default_values()), #{ lpadding: 0, rpadding: 0 })
   let tokens_list  = simple_align#tokenizer#lines_to_tokens_list(lines, "|", options)
   let token_widths = simple_align#calculator#calculate_token_widths(tokens_list)
 
@@ -84,7 +84,7 @@ function s:format.aligns_tokens_with_justifying_to_right_if_right_justify_option
   let firstlnum    = 1
   let lastlnum     = firstlnum + 3
   let lines        = simple_align#lines#get(firstlnum, lastlnum)
-  let options = extend(simple_align#options#default_values()->copy(), #{ justify: "right" })
+  let options = extend(copy(simple_align#options#default_values()), #{ justify: "right" })
   let tokens_list  = simple_align#tokenizer#lines_to_tokens_list(lines, "|", options)
   let token_widths = simple_align#calculator#calculate_token_widths(tokens_list)
 
