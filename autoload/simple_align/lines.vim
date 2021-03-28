@@ -1,3 +1,5 @@
-function simple_align#lines#get(from_lnum, to_lnum) abort
-  return map(range(a:from_lnum, a:to_lnum), "getline(v:val)")
-endfunction
+vim9script
+
+def simple_align#lines#get(from_lnum: number, to_lnum: number): list<string>
+  return mapnew(range(from_lnum, to_lnum), "getline(v:val)")
+enddef

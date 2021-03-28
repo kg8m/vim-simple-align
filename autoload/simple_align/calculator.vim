@@ -1,23 +1,25 @@
-function simple_align#calculator#calculate_token_widths(tokens_list) abort
-  let widths = []
+vim9script
 
-  for tokens in a:tokens_list
-    let token_widths = map(copy(tokens), "strdisplaywidth(v:val)")
-    let n = len(token_widths)
-    let i = 0
+def simple_align#calculator#calculate_token_widths(tokens_list: list<list<string>>): list<number>
+  final widths = []
+
+  for tokens in tokens_list
+    const token_widths = mapnew(tokens, "strdisplaywidth(v:val)")
+    const n = len(token_widths)
+    var i = 0
 
     while i <# n
-      let current_width = get(widths, i, -1)
+      const current_width = get(widths, i, -1)
 
       if current_width >=# 0
-        call remove(widths, i)
+        remove(widths, i)
       endif
 
-      call insert(widths, max([token_widths[i], current_width]), i)
+      insert(widths, max([token_widths[i], current_width]), i)
 
-      let i += 1
+      i += 1
     endwhile
   endfor
 
   return widths
-endfunction
+enddef

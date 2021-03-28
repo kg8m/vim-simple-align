@@ -1,37 +1,42 @@
-function simple_align#tokenizer#lines_to_tokens_list(lines, delimiter, options) abort
-  return map(copy(a:lines), "s:line_to_tokens(v:val, a:delimiter, a:options)")
-endfunction
+vim9script
 
-function s:line_to_tokens(line, delimiter, options) abort
-  return s:split(trim(a:line), a:delimiter, #{ count: a:options.count })
-endfunction
+def simple_align#tokenizer#lines_to_tokens_list(lines: list<string>, delimiter: string, options: dict<any>): list<list<string>>
+  return mapnew(lines, (_, line) => s:line_to_tokens(line, delimiter, options))
+enddef
 
-function s:split(line, delimiter, options) abort
-  let matchpos    = matchstrpos(a:line, a:delimiter)
-  let delimiter   = matchpos[0]
-  let start_index = matchpos[1]
-  let end_index   = matchpos[2]
+def s:line_to_tokens(line: string, delimiter: string, options: dict<any>): list<string>
+  return s:split(trim(line), delimiter, { count: options.count })
+enddef
+
+def s:split(line: string, delimiter: string, options: dict<any>): list<string>
+  const matchpos          = matchstrpos(line, delimiter)
+  const matched_delimiter = matchpos[0]
+  const start_index       = matchpos[1]
+  const end_index         = matchpos[2]
 
   if start_index ==# -1
-    return [a:line]
+    return [line]
   else
+    var lhs: string
+    var rhs: string
+
     if start_index ==# 0
-      let lhs = ""
-      let rhs = a:line[end_index : -1]
+      lhs = ""
+      rhs = strpart(line, end_index)
     else
-      let lhs = a:line[0 : start_index - 1]
-      let rhs = a:line[end_index : -1]
+      lhs = strpart(line, 0, start_index)
+      rhs = strpart(line, end_index)
     endif
 
-    let lhs = trim(lhs)
-    let rhs = trim(rhs)
+    lhs = trim(lhs)
+    rhs = trim(rhs)
 
-    if a:options.count ==# 1
-      return [lhs, delimiter, rhs]
-    elseif a:options.count ># 1
-      return [lhs, delimiter] + s:split(rhs, a:delimiter, #{ count: a:options.count - 1 })
+    if options.count ==# 1
+      return [lhs, matched_delimiter, rhs]
+    elseif options.count ># 1
+      return [lhs, matched_delimiter] + s:split(rhs, delimiter, { count: options.count - 1 })
     else
-      return [lhs, delimiter] + s:split(rhs, a:delimiter, a:options)
+      return [lhs, matched_delimiter] + s:split(rhs, delimiter, options)
     endif
   endif
-endfunction
+enddef

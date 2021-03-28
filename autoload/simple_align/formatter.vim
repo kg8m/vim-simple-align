@@ -1,37 +1,38 @@
-function simple_align#formatter#format(firstlnum, tokens_list, token_widths, options) abort
-  let cursor     = #{ lnum: line("."), col: col(".") }
-  let lazyredraw = &lazyredraw
+vim9script
+
+def simple_align#formatter#format(first_lnum: number, tokens_list: list<list<string>>, token_widths: list<number>, options: dict<any>): void
+  const cursor     = { lnum: line("."), col: col(".") }
+  const lazyredraw = &lazyredraw
 
   try
     set lazyredraw
-    call s:format(a:firstlnum, a:tokens_list, a:token_widths, a:options)
+    s:format(first_lnum, tokens_list, token_widths, options)
   finally
-    call cursor(cursor.lnum, cursor.col)
-    let &lazyredraw = lazyredraw
+    cursor(cursor.lnum, cursor.col)
+    &lazyredraw = lazyredraw
   endtry
-endfunction
+enddef
 
-function s:format(firstlnum, tokens_list, token_widths, options) abort
-  let lastlnum = a:firstlnum + len(a:tokens_list) - 1
-  let indent   = s:detect_indent(a:firstlnum, lastlnum)
-  let lines    = map(copy(a:tokens_list), "s:tokens_to_line(a:firstlnum + v:key, indent, v:val, a:token_widths, a:options)")
+def s:format(firstlnum: number, tokens_list: list<list<string>>, token_widths: list<number>, options: dict<any>): void
+  const lastlnum = firstlnum + len(tokens_list) - 1
+  const indent   = s:detect_indent(firstlnum, lastlnum)
+  const lines    = mapnew(tokens_list, (index, tokens) => s:tokens_to_line(firstlnum + index, indent, tokens, token_widths, options))
+  setline(firstlnum, lines)
+enddef
 
-  call setline(a:firstlnum, lines)
-endfunction
+def s:detect_indent(firstlnum: number, lastlnum: number): string
+  final data = { lnum: 0, indent: -1 }
 
-function s:detect_indent(firstlnum, lastlnum) abort
-  let data = #{ lnum: 0, indent: -1 }
-
-  for lnum in range(a:firstlnum, a:lastlnum)
+  for lnum in range(firstlnum, lastlnum)
     if empty(getline(lnum))
       continue
     endif
 
-    let indent = indent(lnum)
+    const indent = indent(lnum)
 
     if data.indent ==# -1 || indent <# data.indent
-      let data.lnum   = lnum
-      let data.indent = indent
+      data.lnum   = lnum
+      data.indent = indent
     endif
   endfor
 
@@ -40,53 +41,56 @@ function s:detect_indent(firstlnum, lastlnum) abort
   else
     return matchstr(getline(data.lnum), '^\s*')
   endif
-endfunction
+enddef
 
-function s:tokens_to_line(lnum, indent, tokens, token_widths, options) abort
-  let line = ""
+def s:tokens_to_line(lnum: number, indent: string, tokens: list<string>, token_widths: list<number>, options: dict<any>): string
+  var line = ""
 
-  if a:token_widths[0] ># 0
-    let line ..= s:format_field(a:tokens[0], a:token_widths[0], a:options.justify)
+  if token_widths[0] ># 0
+    line ..= s:format_field(tokens[0], token_widths[0], options.justify)
   endif
 
-  let n = len(a:tokens)
-  let i = 1
+  const n = len(tokens)
+  var i = 1
 
   while i <# n
-    let token = a:tokens[i]
-    let width = a:token_widths[i]
+    const token = tokens[i]
+    const width = token_widths[i]
+
+    var formatted: string
+    var is_trimming: bool
 
     if s:is_delimiter(i)
-      let lpadding    = i ==# 1     && a:token_widths[0] ==#  0 ? 0 : a:options.lpadding
-      let rpadding    = i ==# n - 2 && a:token_widths[-1] ==# 0 ? 0 : a:options.rpadding
-      let formatted   = s:format_delimiter(token, width, lpadding, rpadding, a:options.justify)
-      let is_trimming = (i ==# n - 2) && (a:token_widths[-1] ==# 0)
+      const lpadding = i ==# 1     && token_widths[0] ==#  0 ? 0 : options.lpadding
+      const rpadding = i ==# n - 2 && token_widths[-1] ==# 0 ? 0 : options.rpadding
+      formatted   = s:format_delimiter(token, width, lpadding, rpadding, options.justify)
+      is_trimming = (i ==# n - 2) && (token_widths[-1] ==# 0)
     else
-      let formatted   = s:format_field(token, width, a:options.justify)
-      let is_trimming = (i ==# n - 1)
+      formatted   = s:format_field(token, width, options.justify)
+      is_trimming = (i ==# n - 1)
     endif
 
     if is_trimming
-      let formatted = substitute(formatted, '\v\s+$', "", "")
+      formatted = substitute(formatted, '\v\s+$', "", "")
     endif
 
-    let line ..= formatted
-    let i += 1
+    line ..= formatted
+    i += 1
   endwhile
 
-  return a:indent .. line
-endfunction
+  return indent .. line
+enddef
 
-function s:format_field(value, width, justify) abort
-  let format = printf("%%%s%dS", a:justify ==# "left" ? "-" : "", a:width)
-  return printf(format, a:value)
-endfunction
+def s:format_field(value: string, width: number, justify: string): string
+  const fmt = printf("%%%s%dS", justify ==# "left" ? "-" : "", width)
+  return printf(fmt, value)
+enddef
 
-function s:format_delimiter(delimiter, width, lpadding, rpadding, justify) abort
-  let format = printf("%%%ds%%%s%dS%%%ds", a:lpadding, a:justify ==# "left" ? "-" : "", a:width, a:rpadding)
-  return printf(format, "", a:delimiter, "")
-endfunction
+def s:format_delimiter(delimiter: string, width: number, lpadding: number, rpadding: number, justify: string): string
+  const fmt = printf("%%%ds%%%s%dS%%%ds", lpadding, justify ==# "left" ? "-" : "", width, rpadding)
+  return printf(fmt, "", delimiter, "")
+enddef
 
-function s:is_delimiter(index) abort
-  return a:index % 2 ==# 1
-endfunction
+def s:is_delimiter(index: number): bool
+  return index % 2 ==# 1
+enddef

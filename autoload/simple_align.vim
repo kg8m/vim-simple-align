@@ -1,14 +1,16 @@
-function simple_align#align(from_lnum, to_lnum, args) abort
-  let lines = simple_align#lines#get(a:from_lnum, a:to_lnum)
-  let args  = simple_align#parser#parse(a:args)
+vim9script
 
-  if empty(args.delimiter)
-    call simple_align#logger#error("Delimiter is not given.")
+def simple_align#align(from_lnum: number, to_lnum: number, args: list<string>): void
+  const lines  = simple_align#lines#get(from_lnum, to_lnum)
+  const parsed = simple_align#parser#parse(args)
+
+  if empty(parsed.delimiter)
+    simple_align#logger#error("Delimiter is not given.")
     return
   endif
 
-  let tokens_list  = simple_align#tokenizer#lines_to_tokens_list(lines, args.delimiter, args.options)
-  let token_widths = simple_align#calculator#calculate_token_widths(tokens_list)
+  const tokens_list  = simple_align#tokenizer#lines_to_tokens_list(lines, parsed.delimiter, parsed.options)
+  const token_widths = simple_align#calculator#calculate_token_widths(tokens_list)
 
-  call simple_align#formatter#format(a:from_lnum, tokens_list, token_widths, args.options)
-endfunction
+  simple_align#formatter#format(from_lnum, tokens_list, token_widths, parsed.options)
+enddef

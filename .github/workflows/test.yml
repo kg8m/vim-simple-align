@@ -11,17 +11,12 @@ jobs:
       fail-fast: false
       matrix:
         neovim:
-          - true
           - false
         version:
           - nightly
-        include:
-          - neovim: false
-            version: v8.2.2000
-          - neovim: false
-            version: v8.2.1000
-          - neovim: false
-            version: v8.2.0000
+          - v8.2.2000
+          - v8.2.1000
+          - v8.2.0149
     steps:
       - uses: actions/checkout@v2
       - name: Setup Vim

@@ -1,13 +1,15 @@
-function simple_align#logger#debug(...) abort
-  echomsg "[simple-align] DEBUG - " .. join(map(copy(a:000), "string(v:val)"), " ")
-endfunction
+vim9script
 
-function simple_align#logger#info(...) abort
-  echomsg "[simple-align] INFO - " .. join(a:000, " ")
-endfunction
+def simple_align#logger#debug(...messages: list<string>): void
+  echomsg "[simple-align] DEBUG - " .. join(mapnew(messages, (_, message) => string(message)), " ")
+enddef
 
-function simple_align#logger#error(...) abort
+def simple_align#logger#info(...messages: list<string>): void
+  echomsg "[simple-align] INFO - " .. join(messages, " ")
+enddef
+
+def simple_align#logger#error(...messages: list<string>): void
   echohl ErrorMsg
-  echomsg "[simple-align] ERROR - " .. join(a:000, " ")
+  echomsg "[simple-align] ERROR - " .. join(messages, " ")
   echohl None
-endfunction
+enddef

@@ -1,91 +1,94 @@
-let s:LIST = [
-\   "-count",
-\   "-lpadding",
-\   "-rpadding",
-\   "-justify",
-\ ]
+vim9script
 
-let s:DEFAULT_VALUES = #{
-\   count:    "-1",
-\   lpadding: "1",
-\   rpadding: "1",
-\   justify:  "left",
-\ }
+const LIST = [
+  "-count",
+  "-lpadding",
+  "-rpadding",
+  "-justify",
+]
 
-let s:VALUE_NORMALIZINGS = #{
-\   count:    function("str2nr"),
-\   lpadding: function("str2nr"),
-\   rpadding: function("str2nr"),
-\   justify:  v:null,
-\ }
+const DEFAULT_VALUES = {
+  count:    "-1",
+  lpadding: "1",
+  rpadding: "1",
+  justify:  "left",
+}
 
-let s:VALID_VALUE_PATTERNS = #{
-\   count:    '^-1$\|^[1-9][0-9]*$',
-\   lpadding: '^[0-9]\+$',
-\   rpadding: '^[0-9]\+$',
-\   justify:  '\v^(left|right)$',
-\ }
+const VALUE_NORMALIZINGS = {
+  count:    function("str2nr"),
+  lpadding: function("str2nr"),
+  rpadding: function("str2nr"),
+  justify:  v:null,
+}
 
-let s:VALUE_CANDIDATES = #{
-\   count:    ["-1"] + map(range(1, 9), "string(v:val)"),
-\   lpadding: map(range(0, 9), "string(v:val)"),
-\   rpadding: map(range(0, 9), "string(v:val)"),
-\   justify:  ["left", "right"],
-\ }
+const VALID_VALUE_PATTERNS = {
+  count:    '^-1$\|^[1-9][0-9]*$',
+  lpadding: '^[0-9]\+$',
+  rpadding: '^[0-9]\+$',
+  justify:  '\v^(left|right)$',
+}
 
-function simple_align#options#completion_candidates(arglead, cmdline, curpos) abort
-  let leading_chars       = a:cmdline[0 : a:curpos - 1]
-  let leading_arg_pattern = a:arglead ==# "" ? '\v\S+\s+$' : '\v\S+$'
-  let leading_arg         = trim(matchstr(leading_chars, leading_arg_pattern))
+const VALUE_CANDIDATES = {
+  count:    ["-1"] + mapnew(range(1, 9), (_, i) => string(i)),
+  lpadding: mapnew(range(0, 9), (_, i) => string(i)),
+  rpadding: mapnew(range(0, 9), (_, i) => string(i)),
+  justify:  ["left", "right"],
+}
+
+def simple_align#options#completion_candidates(arglead: string, cmdline: string, curpos: number): list<string>
+  const leading_chars       = cmdline[0 : curpos - 1]
+  const leading_arg_pattern = arglead ==# "" ? '\v\S+\s+$' : '\v\S+$'
+  const leading_arg         = trim(matchstr(leading_chars, leading_arg_pattern))
 
   if simple_align#options#is_option(leading_arg)
-    let option_name = simple_align#options#argument_to_name(leading_arg)
+    const option_name = simple_align#options#argument_to_name(leading_arg)
 
-    if a:arglead ==# ""
-      return s:VALUE_CANDIDATES[option_name]
+    if arglead ==# ""
+      return VALUE_CANDIDATES[option_name]
     else
       return []
     endif
   else
-    if a:arglead ==# ""
-      return s:LIST
+    if arglead ==# ""
+      return LIST
     else
-      let prev_leading_arg = trim(matchstr(substitute(leading_chars, '\v\s+\S+$', "", ""), '\v\S+$'))
+      const prev_leading_arg = trim(matchstr(substitute(leading_chars, '\v\s+\S+$', "", ""), '\v\S+$'))
+      var all_candidates: list<string>
 
       if simple_align#options#is_option(prev_leading_arg)
-        let option_name    = simple_align#options#argument_to_name(prev_leading_arg)
-        let all_candidates = s:VALUE_CANDIDATES[option_name]
+        const option_name = simple_align#options#argument_to_name(prev_leading_arg)
+        all_candidates = VALUE_CANDIDATES[option_name]
       else
-        let all_candidates = s:LIST
+        all_candidates = LIST
       endif
 
-      return filter(copy(all_candidates), "v:val =~# '^' .. a:arglead")
+      return filter(copy(all_candidates), (_, candidate) => candidate =~# '^' .. arglead)
     endif
   endif
-endfunction
+enddef
 
-function simple_align#options#is_option(string) abort
-  return index(s:LIST, a:string) ># -1
-endfunction
+def simple_align#options#is_option(string: string): bool
+  return index(LIST, string) ># -1
+enddef
 
-function simple_align#options#is_valid_value(option_name, value) abort
-  return a:value =~# s:VALID_VALUE_PATTERNS[a:option_name]
-endfunction
+def simple_align#options#is_valid_value(option_name: string, value: string): bool
+  return value =~# VALID_VALUE_PATTERNS[option_name]
+enddef
 
-function simple_align#options#argument_to_name(argument) abort
-  return substitute(a:argument, '^-\+', "", "")
-endfunction
+def simple_align#options#argument_to_name(argument: string): string
+  return substitute(argument, '^-\+', "", "")
+enddef
 
-function simple_align#options#default_values() abort
-  return s:DEFAULT_VALUES
-endfunction
+def simple_align#options#default_values(): dict<string>
+  return DEFAULT_VALUES
+enddef
 
-function simple_align#options#normalize_value(option_name, value) abort
-  let Normalizing = s:VALUE_NORMALIZINGS[a:option_name]
+def simple_align#options#normalize_value(option_name: string, value: string): any
+  const Normalizing = VALUE_NORMALIZINGS[option_name]
 
   if type(Normalizing) ==# v:t_func
-    return Normalizing(a:value)
+    return Normalizing(value)
   else
-    return a:value
+    return value
   endif
-endfunction
+enddef
