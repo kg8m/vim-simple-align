@@ -10,9 +10,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        neovim:
+          - true
+          - false
+        version:
+          - nightly
         include:
-          - neovim: true
-            version: nightly
           - neovim: false
             version: v8.2.2000
           - neovim: false
