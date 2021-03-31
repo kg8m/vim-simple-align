@@ -12,23 +12,6 @@ vim-simple-align doesn't cover all alignment cases but aims to work nice in many
 ![vim-simple-align-demo](https://user-images.githubusercontent.com/694547/110630529-cdcb9880-81e8-11eb-93c1-7c6fed199663.gif)
 
 
-Table of Contents
---------------------------------------------------
-
-* [Commands/Usage](https://github.com/kg8m/vim-simple-align#commandsusage)
-  * [Options](https://github.com/kg8m/vim-simple-align#options)
-* [Examples](https://github.com/kg8m/vim-simple-align#examples)
-  * [Align Markdown table](https://github.com/kg8m/vim-simple-align#align-markdown-table)
-  * [Align Markdown table with justifying to right](https://github.com/kg8m/vim-simple-align#align-markdown-table-with-justifying-to-right)
-  * [Align JSON, dictionary/hash items](https://github.com/kg8m/vim-simple-align#align-json-dictionaryhash-items)
-  * [Align variable assginments](https://github.com/kg8m/vim-simple-align#align-variable-assginments)
-  * [Align output/result comments](https://github.com/kg8m/vim-simple-align#align-outputresult-comments)
-  * [Align non-whitespace characters](https://github.com/kg8m/vim-simple-align#align-non-whitespace-characters)
-* [Why not vim-easy-align?](https://github.com/kg8m/vim-simple-align#why-not-vim-easy-align)
-* [Installation](https://github.com/kg8m/vim-simple-align#installation)
-* [Requirements](https://github.com/kg8m/vim-simple-align#requirements)
-
-
 Commands/Usage
 --------------------------------------------------
 
