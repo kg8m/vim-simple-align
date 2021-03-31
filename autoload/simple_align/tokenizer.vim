@@ -3,10 +3,7 @@ function simple_align#tokenizer#lines_to_tokens_list(lines, delimiter, options) 
 endfunction
 
 function s:line_to_tokens(line, delimiter, options) abort
-  let _count = a:options.count
-  let tokens = s:split(trim(a:line), a:delimiter, #{ count: _count })
-
-  return map(tokens, "v:val")
+  return s:split(trim(a:line), a:delimiter, #{ count: a:options.count })
 endfunction
 
 function s:split(line, delimiter, options) abort
@@ -32,8 +29,7 @@ function s:split(line, delimiter, options) abort
     if a:options.count ==# 1
       return [lhs, delimiter, rhs]
     elseif a:options.count ># 1
-      let options = extend(copy(a:options), #{ count: a:options.count - 1 })
-      return [lhs, delimiter] + s:split(rhs, a:delimiter, options)
+      return [lhs, delimiter] + s:split(rhs, a:delimiter, #{ count: a:options.count - 1 })
     else
       return [lhs, delimiter] + s:split(rhs, a:delimiter, a:options)
     endif
