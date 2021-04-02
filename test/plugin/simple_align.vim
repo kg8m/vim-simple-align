@@ -171,6 +171,40 @@ function s:command.aligns_markdown_table_if_right_justify_option_given() abort
   call s:assert.equal(getline(firstlnum, lastlnum), formatted_lines)
 endfunction
 
+function s:command.aligns_already_aligned_markdown_table() abort
+  let formatted_lines = [
+  \   "aaa | b   | ccccc",
+  \   "--- | --- | ---",
+  \   "d   | ee  | fff",
+  \   "あ  | い  | う",
+  \ ]
+
+  call setline(1, formatted_lines)
+
+  let firstlnum = 1
+  let lastlnum  = firstlnum + 3
+
+  execute printf("%d,%dSimpleAlign |", firstlnum, lastlnum)
+  call s:assert.equal(getline(firstlnum, lastlnum), formatted_lines)
+endfunction
+
+function s:command.aligns_already_aligned_markdown_table_if_first_tokens_are_empty() abort
+  let formatted_lines = [
+  \   "aaa | b   | ccccc",
+  \   "--- | --- | ---",
+  \   "    | ee  | fff",
+  \   "    | い  | う",
+  \ ]
+
+  call setline(1, formatted_lines)
+
+  let firstlnum = 1
+  let lastlnum  = firstlnum + 3
+
+  execute printf("%d,%dSimpleAlign |", firstlnum, lastlnum)
+  call s:assert.equal(getline(firstlnum, lastlnum), formatted_lines)
+endfunction
+
 function s:command.aligns_variable_assignments() abort
   call setline(1, s:JS)
 

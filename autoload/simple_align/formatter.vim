@@ -12,15 +12,38 @@ function simple_align#formatter#format(firstlnum, tokens_list, token_widths, opt
 endfunction
 
 function s:format(firstlnum, tokens_list, token_widths, options) abort
-  let lastline = a:firstlnum + len(a:tokens_list) - 1
-  let lines    = map(copy(a:tokens_list), "s:tokens_to_line(a:firstlnum + v:key, v:val, a:token_widths, a:options)")
+  let lastlnum = a:firstlnum + len(a:tokens_list) - 1
+  let indent   = s:detect_indent(a:firstlnum, lastlnum)
+  let lines    = map(copy(a:tokens_list), "s:tokens_to_line(a:firstlnum + v:key, indent, v:val, a:token_widths, a:options)")
 
   call setline(a:firstlnum, lines)
 endfunction
 
-function s:tokens_to_line(lnum, tokens, token_widths, options) abort
-  let indent = matchstr(getline(a:lnum), '^\s*')
-  let line   = ""
+function s:detect_indent(firstlnum, lastlnum) abort
+  let data = #{ lnum: 0, indent: -1 }
+
+  for lnum in range(a:firstlnum, a:lastlnum)
+    if empty(getline(lnum))
+      continue
+    endif
+
+    let indent = indent(lnum)
+
+    if data.indent ==# -1 || indent <# data.indent
+      let data.lnum   = lnum
+      let data.indent = indent
+    endif
+  endfor
+
+  if data.indent ==# -1
+    return ""
+  else
+    return matchstr(getline(data.lnum), '^\s*')
+  endif
+endfunction
+
+function s:tokens_to_line(lnum, indent, tokens, token_widths, options) abort
+  let line = ""
 
   if a:token_widths[0] ># 0
     let line ..= s:format_field(a:tokens[0], a:token_widths[0], a:options.justify)
@@ -51,7 +74,7 @@ function s:tokens_to_line(lnum, tokens, token_widths, options) abort
     let i += 1
   endwhile
 
-  return indent .. line
+  return a:indent .. line
 endfunction
 
 function s:format_field(value, width, justify) abort

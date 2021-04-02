@@ -92,6 +92,34 @@ function s:lines_to_tokens_list.treats_first_token_as_empty_string_if_line_start
   call s:assert.equal(simple_align#tokenizer#lines_to_tokens_list(lines, s:DELIMITER, options), expected)
 endfunction
 
+function s:lines_to_tokens_list.treats_first_token_as_empty_string_if_line_starts_with_spaces_and_delimiter() abort
+  let lines = [
+  \   "     | aaaaa | bbbbbb | cccccccccccc",
+  \   "ddddddddddddddddddd | eeeeeee | fffff",
+  \ ]
+  let options = #{ count: -1 }
+  let expected = [
+  \   ["", "|", "aaaaa", "|", "bbbbbb", "|", "cccccccccccc"],
+  \   ["ddddddddddddddddddd", "|", "eeeeeee", "|", "fffff"],
+  \ ]
+
+  call s:assert.equal(simple_align#tokenizer#lines_to_tokens_list(lines, s:DELIMITER, options), expected)
+endfunction
+
+function s:lines_to_tokens_list.treats_last_token_as_empty_string_if_line_ends_with_spaces_and_delimiter() abort
+  let lines = [
+  \   "aaaaa | bbbbbb | cccccccccccc |     ",
+  \   "ddddddddddddddddddd | eeeeeee | fffff",
+  \ ]
+  let options = #{ count: -1 }
+  let expected = [
+  \   ["aaaaa", "|", "bbbbbb", "|", "cccccccccccc", "|", ""],
+  \   ["ddddddddddddddddddd", "|", "eeeeeee", "|", "fffff"],
+  \ ]
+
+  call s:assert.equal(simple_align#tokenizer#lines_to_tokens_list(lines, s:DELIMITER, options), expected)
+endfunction
+
 function s:lines_to_tokens_list.treats_last_token_as_empty_string_if_line_ends_with_delimiter() abort
   let lines =<< trim TXT
     aaaaa | bbbbbb | cccccccccccc |
