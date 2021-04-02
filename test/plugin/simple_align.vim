@@ -215,7 +215,7 @@ function s:command.aligns_variable_assignments_with_non_whitespace_char() abort
   \   "  const ccccc = 333;",
   \ ]
 
-  execute printf("%d,%dSimpleAlign \\S\\+ -lpadding 0", firstlnum, lastlnum)
+  execute printf("%d,%dSimpleAlign =", firstlnum, lastlnum)
   call s:assert.equal(getline(firstlnum, lastlnum), formatted_lines)
 endfunction
 

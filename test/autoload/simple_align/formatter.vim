@@ -35,6 +35,13 @@ func main() {
 }
 GO
 
+let s:DEFAULT_OPTIONS = #{
+\   count:    -1,
+\   lpadding: 1,
+\   rpadding: 1,
+\   justify:  "left",
+\ }
+
 let s:format = themis#suite("simple_align#formatter#format")
 function s:format.aligns_tokens_with_1_space_around_each_delimiter_and_justifying_to_left_if_default_options_given() abort
   call setline(1, s:MARKDOWN_TABLE)
@@ -42,7 +49,7 @@ function s:format.aligns_tokens_with_1_space_around_each_delimiter_and_justifyin
   let firstlnum    = 1
   let lastlnum     = firstlnum + 3
   let lines        = simple_align#lines#get(firstlnum, lastlnum)
-  let options      = simple_align#options#default_values()
+  let options      = s:DEFAULT_OPTIONS
   let tokens_list  = simple_align#tokenizer#lines_to_tokens_list(lines, "|", options)
   let token_widths = simple_align#calculator#calculate_token_widths(tokens_list)
 
@@ -63,7 +70,7 @@ function s:format.aligns_tokens_with_spaces_around_each_delimiter_depending_on_p
   let firstlnum    = 1
   let lastlnum     = firstlnum + 3
   let lines        = simple_align#lines#get(firstlnum, lastlnum)
-  let options      = extend(copy(simple_align#options#default_values()), #{ lpadding: 0, rpadding: 0 })
+  let options      = extend(copy(s:DEFAULT_OPTIONS), #{ lpadding: 0, rpadding: 0 })
   let tokens_list  = simple_align#tokenizer#lines_to_tokens_list(lines, "|", options)
   let token_widths = simple_align#calculator#calculate_token_widths(tokens_list)
 
@@ -84,7 +91,7 @@ function s:format.aligns_tokens_with_justifying_to_right_if_right_justify_option
   let firstlnum    = 1
   let lastlnum     = firstlnum + 3
   let lines        = simple_align#lines#get(firstlnum, lastlnum)
-  let options = extend(copy(simple_align#options#default_values()), #{ justify: "right" })
+  let options      = extend(copy(s:DEFAULT_OPTIONS), #{ justify: "right" })
   let tokens_list  = simple_align#tokenizer#lines_to_tokens_list(lines, "|", options)
   let token_widths = simple_align#calculator#calculate_token_widths(tokens_list)
 
@@ -105,7 +112,7 @@ function s:format.ignores_lacked_columns() abort
   let firstlnum    = 1
   let lastlnum     = firstlnum + 4
   let lines        = simple_align#lines#get(firstlnum, lastlnum)
-  let options      = simple_align#options#default_values()
+  let options      = s:DEFAULT_OPTIONS
   let tokens_list  = simple_align#tokenizer#lines_to_tokens_list(lines, "|", options)
   let token_widths = simple_align#calculator#calculate_token_widths(tokens_list)
 
@@ -127,7 +134,7 @@ function s:format.no_problem_even_if_each_line_starts_and_ends_with_delimiter() 
   let firstlnum    = 1
   let lastlnum     = firstlnum + 3
   let lines        = simple_align#lines#get(firstlnum, lastlnum)
-  let options      = simple_align#options#default_values()
+  let options      = s:DEFAULT_OPTIONS
   let tokens_list  = simple_align#tokenizer#lines_to_tokens_list(lines, "|", options)
   let token_widths = simple_align#calculator#calculate_token_widths(tokens_list)
 
@@ -148,7 +155,7 @@ function s:format.aligns_tokens_with_with_keeping_each_line_indentation() abort
   let firstlnum    = 2
   let lastlnum     = firstlnum + 2
   let lines        = simple_align#lines#get(firstlnum, lastlnum)
-  let options      = simple_align#options#default_values()
+  let options      = s:DEFAULT_OPTIONS
   let tokens_list  = simple_align#tokenizer#lines_to_tokens_list(lines, "=", options)
   let token_widths = simple_align#calculator#calculate_token_widths(tokens_list)
 
@@ -168,7 +175,7 @@ function s:format.aligns_tokens_with_with_keeping_each_line_indentation_even_if_
   let firstlnum    = 2
   let lastlnum     = firstlnum + 2
   let lines        = simple_align#lines#get(firstlnum, lastlnum)
-  let options      = simple_align#options#default_values()
+  let options      = s:DEFAULT_OPTIONS
   let tokens_list  = simple_align#tokenizer#lines_to_tokens_list(lines, ":=", options)
   let token_widths = simple_align#calculator#calculate_token_widths(tokens_list)
 
@@ -188,7 +195,7 @@ function s:format.restores_lazyredraw_configuration() abort
   let firstlnum    = 1  " aaa | b | ccccc
   let lastlnum     = firstlnum
   let lines        = simple_align#lines#get(firstlnum, lastlnum)
-  let options      = simple_align#options#default_values()
+  let options      = s:DEFAULT_OPTIONS
   let tokens_list  = simple_align#tokenizer#lines_to_tokens_list(lines, "|", options)
   let token_widths = simple_align#calculator#calculate_token_widths(tokens_list)
 
@@ -203,7 +210,7 @@ function s:format.restores_cursor_position() abort
   let firstlnum    = 1  " aaa | b | ccccc
   let lastlnum     = firstlnum
   let lines        = simple_align#lines#get(firstlnum, lastlnum)
-  let options      = simple_align#options#default_values()
+  let options      = s:DEFAULT_OPTIONS
   let tokens_list  = simple_align#tokenizer#lines_to_tokens_list(lines, "|", options)
   let token_widths = simple_align#calculator#calculate_token_widths(tokens_list)
 
