@@ -14,14 +14,6 @@ jobs:
           - false
         version:
           - nightly
-          - v8.2.2269
-          - v8.2.2268
-          - v8.2.2267
-          - v8.2.2266
-          - v8.2.2265
-          - v8.2.2264
-          - v8.2.2263
-          - v8.2.2262
           - v8.2.2261
     steps:
       - uses: actions/checkout@v2
