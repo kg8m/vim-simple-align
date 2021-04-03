@@ -14,11 +14,15 @@ jobs:
           - false
         version:
           - nightly
-          - v8.2.2500
-          - v8.2.2400
-          - v8.2.2300
-          - v8.2.2200
-          - v8.2.2100
+          - v8.2.2290
+          - v8.2.2280
+          - v8.2.2270
+          - v8.2.2260
+          - v8.2.2250
+          - v8.2.2240
+          - v8.2.2230
+          - v8.2.2220
+          - v8.2.2210
     steps:
       - uses: actions/checkout@v2
       - name: Setup Vim
