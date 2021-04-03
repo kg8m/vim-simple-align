@@ -383,6 +383,18 @@ call dein#add("kg8m/vim-simple-align")
 Note: dein.vim's lazy loading feature with `on_cmd` option is not recommended for vim-simple-align. You will see `E471: Argument required: '<,'>SimpleAlign` if so. Anyway, lazy loading of vim-simple-align doesn't make Vim's startup faster because vim-simple-align just defines 1 command when added to `runtimepath`. dein.vim's lazy loading with `on_cmd` also defines a dummy command.
 
 
+Vim9 script
+--------------------------------------------------
+
+You can use Vim9 script version if you use Vim 8.2.2261+. Vim9 script version is 5-10 times faster than legacy Vim script version. Vim9 script version is available on [`vim9` branch](https://github.com/kg8m/vim-simple-align/tree/vim9).
+
+```vim
+call dein#add("kg8m/vim-simple-align", { "rev": "vim9" })
+```
+
+Note: Vim9 script is experimental feature. It is not stable. Vim9 script version may be sometimes broken after you upgrade Vim.
+
+
 Requirements
 --------------------------------------------------
 
