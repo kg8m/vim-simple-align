@@ -74,7 +74,7 @@ function s:tokens_to_line(lnum, indent, tokens, token_widths, options) abort
     let i += 1
   endwhile
 
-  return a:indent .. line
+  return a:indent .. substitute(line, '\s*$', "", "")
 endfunction
 
 function s:format_field(value, width, justify) abort

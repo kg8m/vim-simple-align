@@ -5,6 +5,7 @@ aaa | b | ccccc
 --- | --- | ---
 d | ee | fff
 あ | い | う
+え | お |
 0 | 1
 MARKDOWN
 
@@ -47,69 +48,6 @@ function s:format.aligns_tokens_with_1_space_around_each_delimiter_and_justifyin
   call setline(1, s:MARKDOWN_TABLE)
 
   let firstlnum    = 1
-  let lastlnum     = firstlnum + 3
-  let lines        = simple_align#lines#get(firstlnum, lastlnum)
-  let options      = s:DEFAULT_OPTIONS
-  let tokens_list  = simple_align#tokenizer#lines_to_tokens_list(lines, "|", options)
-  let token_widths = simple_align#calculator#calculate_token_widths(tokens_list)
-
-  let formatted_lines = [
-  \   "aaa | b   | ccccc",
-  \   "--- | --- | ---",
-  \   "d   | ee  | fff",
-  \   "あ  | い  | う",
-  \ ]
-
-  call simple_align#formatter#format(firstlnum, tokens_list, token_widths, options)
-  call s:assert.equal(getline(firstlnum, lastlnum), formatted_lines)
-endfunction
-
-function s:format.aligns_tokens_with_spaces_around_each_delimiter_depending_on_padding_options() abort
-  call setline(1, s:MARKDOWN_TABLE)
-
-  let firstlnum    = 1
-  let lastlnum     = firstlnum + 3
-  let lines        = simple_align#lines#get(firstlnum, lastlnum)
-  let options      = extend(copy(s:DEFAULT_OPTIONS), #{ lpadding: 0, rpadding: 0 })
-  let tokens_list  = simple_align#tokenizer#lines_to_tokens_list(lines, "|", options)
-  let token_widths = simple_align#calculator#calculate_token_widths(tokens_list)
-
-  let formatted_lines = [
-  \   "aaa|b  |ccccc",
-  \   "---|---|---",
-  \   "d  |ee |fff",
-  \   "あ |い |う",
-  \ ]
-
-  call simple_align#formatter#format(firstlnum, tokens_list, token_widths, options)
-  call s:assert.equal(getline(firstlnum, lastlnum), formatted_lines)
-endfunction
-
-function s:format.aligns_tokens_with_justifying_to_right_if_right_justify_option_given() abort
-  call setline(1, s:MARKDOWN_TABLE)
-
-  let firstlnum    = 1
-  let lastlnum     = firstlnum + 3
-  let lines        = simple_align#lines#get(firstlnum, lastlnum)
-  let options      = extend(copy(s:DEFAULT_OPTIONS), #{ justify: "right" })
-  let tokens_list  = simple_align#tokenizer#lines_to_tokens_list(lines, "|", options)
-  let token_widths = simple_align#calculator#calculate_token_widths(tokens_list)
-
-  let formatted_lines = [
-  \   "aaa |   b | ccccc",
-  \   "--- | --- |   ---",
-  \   "  d |  ee |   fff",
-  \   " あ |  い |    う",
-  \ ]
-
-  call simple_align#formatter#format(firstlnum, tokens_list, token_widths, options)
-  call s:assert.equal(getline(firstlnum, lastlnum), formatted_lines)
-endfunction
-
-function s:format.ignores_lacked_columns() abort
-  call setline(1, s:MARKDOWN_TABLE)
-
-  let firstlnum    = 1
   let lastlnum     = firstlnum + 4
   let lines        = simple_align#lines#get(firstlnum, lastlnum)
   let options      = s:DEFAULT_OPTIONS
@@ -121,6 +59,73 @@ function s:format.ignores_lacked_columns() abort
   \   "--- | --- | ---",
   \   "d   | ee  | fff",
   \   "あ  | い  | う",
+  \   "え  | お  |",
+  \ ]
+
+  call simple_align#formatter#format(firstlnum, tokens_list, token_widths, options)
+  call s:assert.equal(getline(firstlnum, lastlnum), formatted_lines)
+endfunction
+
+function s:format.aligns_tokens_with_spaces_around_each_delimiter_depending_on_padding_options() abort
+  call setline(1, s:MARKDOWN_TABLE)
+
+  let firstlnum    = 1
+  let lastlnum     = firstlnum + 4
+  let lines        = simple_align#lines#get(firstlnum, lastlnum)
+  let options      = extend(copy(s:DEFAULT_OPTIONS), #{ lpadding: 0, rpadding: 0 })
+  let tokens_list  = simple_align#tokenizer#lines_to_tokens_list(lines, "|", options)
+  let token_widths = simple_align#calculator#calculate_token_widths(tokens_list)
+
+  let formatted_lines = [
+  \   "aaa|b  |ccccc",
+  \   "---|---|---",
+  \   "d  |ee |fff",
+  \   "あ |い |う",
+  \   "え |お |",
+  \ ]
+
+  call simple_align#formatter#format(firstlnum, tokens_list, token_widths, options)
+  call s:assert.equal(getline(firstlnum, lastlnum), formatted_lines)
+endfunction
+
+function s:format.aligns_tokens_with_justifying_to_right_if_right_justify_option_given() abort
+  call setline(1, s:MARKDOWN_TABLE)
+
+  let firstlnum    = 1
+  let lastlnum     = firstlnum + 4
+  let lines        = simple_align#lines#get(firstlnum, lastlnum)
+  let options      = extend(copy(s:DEFAULT_OPTIONS), #{ justify: "right" })
+  let tokens_list  = simple_align#tokenizer#lines_to_tokens_list(lines, "|", options)
+  let token_widths = simple_align#calculator#calculate_token_widths(tokens_list)
+
+  let formatted_lines = [
+  \   "aaa |   b | ccccc",
+  \   "--- | --- |   ---",
+  \   "  d |  ee |   fff",
+  \   " あ |  い |    う",
+  \   " え |  お |",
+  \ ]
+
+  call simple_align#formatter#format(firstlnum, tokens_list, token_widths, options)
+  call s:assert.equal(getline(firstlnum, lastlnum), formatted_lines)
+endfunction
+
+function s:format.ignores_lacked_columns() abort
+  call setline(1, s:MARKDOWN_TABLE)
+
+  let firstlnum    = 1
+  let lastlnum     = firstlnum + 5
+  let lines        = simple_align#lines#get(firstlnum, lastlnum)
+  let options      = s:DEFAULT_OPTIONS
+  let tokens_list  = simple_align#tokenizer#lines_to_tokens_list(lines, "|", options)
+  let token_widths = simple_align#calculator#calculate_token_widths(tokens_list)
+
+  let formatted_lines = [
+  \   "aaa | b   | ccccc",
+  \   "--- | --- | ---",
+  \   "d   | ee  | fff",
+  \   "あ  | い  | う",
+  \   "え  | お  |",
   \   "0   | 1",
   \ ]
 
