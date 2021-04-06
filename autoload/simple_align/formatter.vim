@@ -78,7 +78,7 @@ def s:tokens_to_line(lnum: number, indent: string, tokens: list<string>, token_w
     i += 1
   endwhile
 
-  return indent .. line
+  return indent .. substitute(line, '\s*$', "", "")
 enddef
 
 def s:format_field(value: string, width: number, justify: string): string
