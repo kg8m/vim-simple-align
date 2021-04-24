@@ -365,6 +365,12 @@ t.boolean    :foo,    null: true,  default: false
 ```
 
 
+Inspired by alignta
+--------------------------------------------------
+
+vim-simple-align is inspired by [h1mesuke/vim-alignta](<https://github.com/h1mesuke/vim-alignta>). It is a simple Vim plugin to align texts. It provides only 1 command `:Alignta` and has a few options and command syntaxes. It is a very great plugin but doesn't work on current Vim. vim-simple-align inherits its philosophy and focuses its limited essential features.
+
+
 Why not vim-easy-align?
 --------------------------------------------------
 
