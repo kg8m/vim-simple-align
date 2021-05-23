@@ -9,7 +9,7 @@ A Vim plugin to align texts by simple way.
 
 vim-simple-align doesn't cover all alignment cases but aims to work nice in many common cases.
 
-https://user-images.githubusercontent.com/694547/119251473-b09c4880-bbe1-11eb-853b-22abf523abda.mp4
+https://user-images.githubusercontent.com/694547/119252181-beec6380-bbe5-11eb-87ce-4ed643598962.mp4
 
 
 Commands/Usage
