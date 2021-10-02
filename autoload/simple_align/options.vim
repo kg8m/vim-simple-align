@@ -5,7 +5,19 @@ const LIST = [
   "-lpadding",
   "-rpadding",
   "-justify",
+
+  "-c",
+  "-l",
+  "-r",
+  "-j",
 ]
+
+const SHORT_NAMES = {
+  c: "count",
+  l: "lpadding",
+  r: "rpadding",
+  j: "justify",
+}
 
 const DEFAULT_VALUES = {
   count:    "-1",
@@ -76,7 +88,13 @@ def simple_align#options#is_valid_value(option_name: string, value: string): boo
 enddef
 
 def simple_align#options#argument_to_name(argument: string): string
-  return substitute(argument, '^-\+', "", "")
+  const name = substitute(argument, '^-\+', "", "")
+
+  if len(name) ==# 1
+    return get(SHORT_NAMES, name, name)
+  else
+    return name
+  endif
 enddef
 
 def simple_align#options#default_values(): dict<string>

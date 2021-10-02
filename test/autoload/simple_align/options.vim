@@ -8,7 +8,7 @@ function s:completion_candidates.returns_list_of_all_option_names_if_arglead_is_
   let arglead = ""
   call s:assert.equal(
   \   simple_align#options#completion_candidates(arglead, cmdline, curpos),
-  \   ["-count", "-lpadding", "-rpadding", "-justify"],
+  \   ["-count", "-lpadding", "-rpadding", "-justify", "-c", "-l", "-r", "-j"],
   \ )
 
   let cmdline = "'<,'>SimpleAlign -count 1 "
@@ -16,7 +16,7 @@ function s:completion_candidates.returns_list_of_all_option_names_if_arglead_is_
   let arglead = ""
   call s:assert.equal(
   \   simple_align#options#completion_candidates(arglead, cmdline, curpos),
-  \   ["-count", "-lpadding", "-rpadding", "-justify"],
+  \   ["-count", "-lpadding", "-rpadding", "-justify", "-c", "-l", "-r", "-j"],
   \ )
 
   let cmdline = "'<,'>SimpleAlign -count 1 -lpadding 0 "
@@ -24,7 +24,7 @@ function s:completion_candidates.returns_list_of_all_option_names_if_arglead_is_
   let arglead = ""
   call s:assert.equal(
   \   simple_align#options#completion_candidates(arglead, cmdline, curpos),
-  \   ["-count", "-lpadding", "-rpadding", "-justify"],
+  \   ["-count", "-lpadding", "-rpadding", "-justify", "-c", "-l", "-r", "-j"],
   \ )
 endfunction
 
@@ -34,7 +34,7 @@ function s:completion_candidates.returns_list_of_all_option_names_if_arglead_is_
   let arglead = "-"
   call s:assert.equal(
   \   simple_align#options#completion_candidates(arglead, cmdline, curpos),
-  \   ["-count", "-lpadding", "-rpadding", "-justify"],
+  \   ["-count", "-lpadding", "-rpadding", "-justify", "-c", "-l", "-r", "-j"],
   \ )
 
   let cmdline = "'<,'>SimpleAlign -count 1 -"
@@ -42,7 +42,7 @@ function s:completion_candidates.returns_list_of_all_option_names_if_arglead_is_
   let arglead = "-"
   call s:assert.equal(
   \   simple_align#options#completion_candidates(arglead, cmdline, curpos),
-  \   ["-count", "-lpadding", "-rpadding", "-justify"],
+  \   ["-count", "-lpadding", "-rpadding", "-justify", "-c", "-l", "-r", "-j"],
   \ )
 endfunction
 
@@ -53,7 +53,7 @@ function s:completion_candidates.returns_list_of_matched_options_if_arglead_is_s
     let arglead = "-c"
     call s:assert.equal(
     \   simple_align#options#completion_candidates(arglead, cmdline, curpos),
-    \   ["-count"],
+    \   [],
     \   "cmdline_prefix: " .. string(cmdline_prefix),
     \ )
 
@@ -62,7 +62,7 @@ function s:completion_candidates.returns_list_of_matched_options_if_arglead_is_s
     let arglead = "-l"
     call s:assert.equal(
     \   simple_align#options#completion_candidates(arglead, cmdline, curpos),
-    \   ["-lpadding"],
+    \   [],
     \   "cmdline_prefix: " .. string(cmdline_prefix),
     \ )
 
@@ -71,7 +71,7 @@ function s:completion_candidates.returns_list_of_matched_options_if_arglead_is_s
     let arglead = "-r"
     call s:assert.equal(
     \   simple_align#options#completion_candidates(arglead, cmdline, curpos),
-    \   ["-rpadding"],
+    \   [],
     \   "cmdline_prefix: " .. string(cmdline_prefix),
     \ )
 
@@ -80,7 +80,7 @@ function s:completion_candidates.returns_list_of_matched_options_if_arglead_is_s
     let arglead = "-j"
     call s:assert.equal(
     \   simple_align#options#completion_candidates(arglead, cmdline, curpos),
-    \   ["-justify"],
+    \   [],
     \   "cmdline_prefix: " .. string(cmdline_prefix),
     \ )
 
@@ -104,6 +104,64 @@ function s:completion_candidates.returns_list_of_matched_options_if_arglead_is_s
   endfor
 endfunction
 
+function s:completion_candidates.returns_list_of_matched_options_if_arglead_is_single_hyphens_and_2_chars() abort
+  for cmdline_prefix in ["'<,'>SimpleAlign ", "'<,'>SimpleAlign -count 1 "]
+    let cmdline = cmdline_prefix .. "-co"
+    let curpos  = strwidth(cmdline)
+    let arglead = "-co"
+    call s:assert.equal(
+    \   simple_align#options#completion_candidates(arglead, cmdline, curpos),
+    \   ["-count"],
+    \   "cmdline_prefix: " .. string(cmdline_prefix),
+    \ )
+
+    let cmdline = cmdline_prefix .. "-lp"
+    let curpos  = strwidth(cmdline)
+    let arglead = "-lp"
+    call s:assert.equal(
+    \   simple_align#options#completion_candidates(arglead, cmdline, curpos),
+    \   ["-lpadding"],
+    \   "cmdline_prefix: " .. string(cmdline_prefix),
+    \ )
+
+    let cmdline = cmdline_prefix .. "-rp"
+    let curpos  = strwidth(cmdline)
+    let arglead = "-rp"
+    call s:assert.equal(
+    \   simple_align#options#completion_candidates(arglead, cmdline, curpos),
+    \   ["-rpadding"],
+    \   "cmdline_prefix: " .. string(cmdline_prefix),
+    \ )
+
+    let cmdline = cmdline_prefix .. "-ju"
+    let curpos  = strwidth(cmdline)
+    let arglead = "-ju"
+    call s:assert.equal(
+    \   simple_align#options#completion_candidates(arglead, cmdline, curpos),
+    \   ["-justify"],
+    \   "cmdline_prefix: " .. string(cmdline_prefix),
+    \ )
+
+    let cmdline = cmdline_prefix .. "-ab"
+    let curpos  = strwidth(cmdline)
+    let arglead = "-ab"
+    call s:assert.equal(
+    \   simple_align#options#completion_candidates(arglead, cmdline, curpos),
+    \   [],
+    \   "cmdline_prefix: " .. string(cmdline_prefix),
+    \ )
+
+    let cmdline = cmdline_prefix .. "--x"
+    let curpos  = strwidth(cmdline)
+    let arglead = "--x"
+    call s:assert.equal(
+    \   simple_align#options#completion_candidates(arglead, cmdline, curpos),
+    \   [],
+    \   "cmdline_prefix: " .. string(cmdline_prefix),
+    \ )
+  endfor
+endfunction
+
 function s:completion_candidates.returns_empty_list_if_arglead_is_chars_starting_with_non_hyphen() abort
   for cmdline_prefix in ["'<,'>SimpleAlign ", "'<,'>SimpleAlign -count 1 "]
     for arglead in ["c", "l", "r", "j", "a"]
@@ -118,7 +176,7 @@ function s:completion_candidates.returns_empty_list_if_arglead_is_chars_starting
   endfor
 endfunction
 
-function s:completion_candidates.returns_list_of_option_values_if_leading_argument_is_option() abort
+function s:completion_candidates.returns_list_of_option_values_if_leading_argument_is_long_option() abort
   let arglead = ""
 
   let cmdline = "'<,'>SimpleAlign -count "
@@ -136,6 +194,31 @@ function s:completion_candidates.returns_list_of_option_values_if_leading_argume
   \ )
 
   let cmdline = "'<,'>SimpleAlign -count 1 -justify "
+  let curpos  = strwidth(cmdline)
+  call s:assert.equal(
+  \   simple_align#options#completion_candidates(arglead, cmdline, curpos),
+  \   ["left", "right"],
+  \ )
+endfunction
+
+function s:completion_candidates.returns_list_of_option_values_if_leading_argument_is_short_option() abort
+  let arglead = ""
+
+  let cmdline = "'<,'>SimpleAlign -c "
+  let curpos  = strwidth(cmdline)
+  call s:assert.equal(
+  \   simple_align#options#completion_candidates(arglead, cmdline, curpos),
+  \   ["-1", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
+  \ )
+
+  let cmdline = "'<,'>SimpleAlign -c 1 -l "
+  let curpos  = strwidth(cmdline)
+  call s:assert.equal(
+  \   simple_align#options#completion_candidates(arglead, cmdline, curpos),
+  \   ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
+  \ )
+
+  let cmdline = "'<,'>SimpleAlign -c 1 -j "
   let curpos  = strwidth(cmdline)
   call s:assert.equal(
   \   simple_align#options#completion_candidates(arglead, cmdline, curpos),
@@ -167,6 +250,11 @@ function s:is_option.returns_true_for_valid_option_string() abort
   \   "-count",
   \   "-lpadding",
   \   "-rpadding",
+  \   "-justify",
+  \   "-c",
+  \   "-l",
+  \   "-r",
+  \   "-j",
   \ ]
 
   for option_name in option_names
@@ -181,6 +269,7 @@ function s:is_option.returns_false_for_invalid_option_string() abort
   let option_names = [
   \   "",
   \   "-",
+  \   "-x",
   \   "1",
   \   "count",
   \   "lpadding",
@@ -266,6 +355,23 @@ function s:is_valid_value.throws_error_for_invalid_option_name_and_valid_value()
 endfunction
 
 let s:argument_to_name = themis#suite("simple_align#options#argument_to_name")
+function s:argument_to_name.converts_short_name_to_long_one() abort
+  let testcases = [
+  \   #{ argument: "-c", expected: "count" },
+  \   #{ argument: "c",  expected: "count" },
+  \   #{ argument: "c-", expected: "c-" },
+  \   #{ argument: "a",  expected: "a" },
+  \ ]
+
+  for testcase in testcases
+    call s:assert.equal(
+    \   simple_align#options#argument_to_name(testcase.argument),
+    \   testcase.expected,
+    \   "testcase: " .. string(testcase),
+    \ )
+  endfor
+endfunction
+
 function s:argument_to_name.trims_leading_hyphens() abort
   let testcases = [
   \   #{ argument: "-count", expected: "count" },

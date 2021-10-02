@@ -30,28 +30,28 @@ cf. `:h regular-expression`
 
 ### Options
 
-#### `-count` option
+#### `-count` (`-c`) option
 
 `-count` option means how many times to split and align tokens. Available values are `-1` and integers greater than 0. `-1` means unlimited.
 
 Default: `-1`
 
 
-#### `-lpadding` option
+#### `-lpadding` (`-l`) option
 
 `-lpadding` option means how many spaces to put left padding of each token. Available values are integers greater than or equal to 0.
 
 Default: `1`
 
 
-#### `-rpadding` option
+#### `-rpadding` (`-r`) option
 
 `-rpadding` option means how many spaces to put right padding of each token. Available values are integers greater than or equal to 0.
 
 Default: `1`
 
 
-#### `-justify` option
+#### `-justify` (`-j`) option
 
 `-justify` option means which side tokens should be on. Available values are `left` and `right`.
 
