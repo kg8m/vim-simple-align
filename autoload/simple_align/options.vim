@@ -3,7 +3,19 @@ let s:LIST = [
 \   "-lpadding",
 \   "-rpadding",
 \   "-justify",
+\
+\   "-c",
+\   "-l",
+\   "-r",
+\   "-j",
 \ ]
+
+let s:SHORT_NAMES = #{
+\   c: "count",
+\   l: "lpadding",
+\   r: "rpadding",
+\   j: "justify",
+\ }
 
 let s:DEFAULT_VALUES = #{
 \   count:    "-1",
@@ -73,7 +85,13 @@ function simple_align#options#is_valid_value(option_name, value) abort
 endfunction
 
 function simple_align#options#argument_to_name(argument) abort
-  return substitute(a:argument, '^-\+', "", "")
+  let name = substitute(a:argument, '^-\+', "", "")
+
+  if len(name) ==# 1
+    return get(s:SHORT_NAMES, name, name)
+  else
+    return name
+  endif
 endfunction
 
 function simple_align#options#default_values() abort

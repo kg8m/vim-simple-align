@@ -42,28 +42,33 @@ cf. |regular-expression| and |vim-simple-align-command-options|
 Command Options                             *vim-simple-align-command-options*
 
                                       *vim-simple-align-command-options-count*
+                                      *vim-simple-align-command-options-c*
 -count
-	`-count` option means how many times to split and align tokens.
+	`-count` (`-c`) option means how many times to split and align tokens.
 	Available values are `-1` and integers greater than 0. `-1` means
 	unlimited.
 	Default: `-1`
 
                                    *vim-simple-align-command-options-lpadding*
+                                   *vim-simple-align-command-options-l*
 -lpadding
-	`-lpadding` option means how many spaces to put left padding of each
-	token. Available values are integers greater than or equal to 0.
+	`-lpadding` (`-l`) option means how many spaces to put left padding of
+	each token. Available values are integers greater than or equal to 0.
 	Default: `1`
 
                                    *vim-simple-align-command-options-rpadding*
+                                   *vim-simple-align-command-options-r*
 -rpadding
-	`-rpadding` option means how many spaces to put right padding of each
-	token. Available values are integers greater than or equal to 0.
+	`-rpadding` (`-r`) option means how many spaces to put right padding
+	of each token. Available values are integers greater than or equal to
+	0.
 	Default: `1`
 
                                     *vim-simple-align-command-options-justify*
+                                    *vim-simple-align-command-options-j*
 -justify
-	`-justify` option means which side tokens should be on. Available
-	values are `left` and `right`.
+	`-justify` (`-j`) option means which side tokens should be on.
+	Available values are `left` and `right`.
 	Default: `left`
 
 ==============================================================================
