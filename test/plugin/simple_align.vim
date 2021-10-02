@@ -53,8 +53,6 @@ RUBY
 
 let s:command = themis#suite(":SimpleAlign")
 function s:command.aligns_markdown_table() abort
-  call setline(1, s:MARKDOWN_TABLE)
-
   let firstlnum = 1
   let lastlnum  = firstlnum + 3
 
@@ -64,14 +62,14 @@ function s:command.aligns_markdown_table() abort
   \   "d   | ee  | fff",
   \   "あ  | い  | う",
   \ ]
+
+  call setline(1, s:MARKDOWN_TABLE)
 
   execute printf("%d,%dSimpleAlign |", firstlnum, lastlnum)
   call s:assert.equal(getline(firstlnum, lastlnum), formatted_lines)
 endfunction
 
 function s:command.aligns_markdown_table_if_minus_1_count_option_given() abort
-  call setline(1, s:MARKDOWN_TABLE)
-
   let firstlnum = 1
   let lastlnum  = firstlnum + 3
 
@@ -82,13 +80,13 @@ function s:command.aligns_markdown_table_if_minus_1_count_option_given() abort
   \   "あ  | い  | う",
   \ ]
 
+  call setline(1, s:MARKDOWN_TABLE)
+
   execute printf("%d,%dSimpleAlign | -count -1", firstlnum, lastlnum)
   call s:assert.equal(getline(firstlnum, lastlnum), formatted_lines)
 endfunction
 
 function s:command.aligns_markdown_table_if_1_count_option_given() abort
-  call setline(1, s:MARKDOWN_TABLE)
-
   let firstlnum = 1
   let lastlnum  = firstlnum + 3
 
@@ -99,13 +97,13 @@ function s:command.aligns_markdown_table_if_1_count_option_given() abort
   \   "あ  | い | う",
   \ ]
 
+  call setline(1, s:MARKDOWN_TABLE)
+
   execute printf("%d,%dSimpleAlign | -count 1", firstlnum, lastlnum)
   call s:assert.equal(getline(firstlnum, lastlnum), formatted_lines)
 endfunction
 
 function s:command.aligns_markdown_table_if_1_padding_options_given() abort
-  call setline(1, s:MARKDOWN_TABLE)
-
   let firstlnum = 1
   let lastlnum  = firstlnum + 3
 
@@ -116,13 +114,13 @@ function s:command.aligns_markdown_table_if_1_padding_options_given() abort
   \   "あ  | い  | う",
   \ ]
 
+  call setline(1, s:MARKDOWN_TABLE)
+
   execute printf("%d,%dSimpleAlign | -lpadding 1 -rpadding 1", firstlnum, lastlnum)
   call s:assert.equal(getline(firstlnum, lastlnum), formatted_lines)
 endfunction
 
 function s:command.aligns_markdown_table_if_0_padding_options_given() abort
-  call setline(1, s:MARKDOWN_TABLE)
-
   let firstlnum = 1
   let lastlnum  = firstlnum + 3
 
@@ -133,13 +131,13 @@ function s:command.aligns_markdown_table_if_0_padding_options_given() abort
   \   "あ |い |う",
   \ ]
 
+  call setline(1, s:MARKDOWN_TABLE)
+
   execute printf("%d,%dSimpleAlign | -lpadding 0 -rpadding 0", firstlnum, lastlnum)
   call s:assert.equal(getline(firstlnum, lastlnum), formatted_lines)
 endfunction
 
 function s:command.aligns_markdown_table_if_other_padding_options_given() abort
-  call setline(1, s:MARKDOWN_TABLE)
-
   let firstlnum = 1
   let lastlnum  = firstlnum + 3
 
@@ -150,13 +148,13 @@ function s:command.aligns_markdown_table_if_other_padding_options_given() abort
   \   "あ    |  い    |  う",
   \ ]
 
+  call setline(1, s:MARKDOWN_TABLE)
+
   execute printf("%d,%dSimpleAlign | -lpadding 3 -rpadding 2", firstlnum, lastlnum)
   call s:assert.equal(getline(firstlnum, lastlnum), formatted_lines)
 endfunction
 
 function s:command.aligns_markdown_table_if_right_justify_option_given() abort
-  call setline(1, s:MARKDOWN_TABLE)
-
   let firstlnum = 1
   let lastlnum  = firstlnum + 3
 
@@ -166,6 +164,8 @@ function s:command.aligns_markdown_table_if_right_justify_option_given() abort
   \   "  d |  ee |   fff",
   \   " あ |  い |    う",
   \ ]
+
+  call setline(1, s:MARKDOWN_TABLE)
 
   execute printf("%d,%dSimpleAlign | -justify right", firstlnum, lastlnum)
   call s:assert.equal(getline(firstlnum, lastlnum), formatted_lines)
@@ -179,10 +179,10 @@ function s:command.aligns_already_aligned_markdown_table() abort
   \   "あ  | い  | う",
   \ ]
 
-  call setline(1, formatted_lines)
-
   let firstlnum = 1
   let lastlnum  = firstlnum + 3
+
+  call setline(1, formatted_lines)
 
   execute printf("%d,%dSimpleAlign |", firstlnum, lastlnum)
   call s:assert.equal(getline(firstlnum, lastlnum), formatted_lines)
@@ -196,18 +196,16 @@ function s:command.aligns_already_aligned_markdown_table_if_first_tokens_are_emp
   \   "    | い  | う",
   \ ]
 
-  call setline(1, formatted_lines)
-
   let firstlnum = 1
   let lastlnum  = firstlnum + 3
+
+  call setline(1, formatted_lines)
 
   execute printf("%d,%dSimpleAlign |", firstlnum, lastlnum)
   call s:assert.equal(getline(firstlnum, lastlnum), formatted_lines)
 endfunction
 
 function s:command.aligns_variable_assignments() abort
-  call setline(1, s:JS)
-
   let firstlnum = 2
   let lastlnum  = firstlnum + 2
 
@@ -217,13 +215,13 @@ function s:command.aligns_variable_assignments() abort
   \   "  const ccccc = 333;",
   \ ]
 
+  call setline(1, s:JS)
+
   execute printf("%d,%dSimpleAlign =", firstlnum, lastlnum)
   call s:assert.equal(getline(firstlnum, lastlnum), formatted_lines)
 endfunction
 
 function s:command.aligns_variable_assignments_if_right_justify_option_given() abort
-  call setline(1, s:JS)
-
   let firstlnum = 2
   let lastlnum  = firstlnum + 2
 
@@ -233,13 +231,13 @@ function s:command.aligns_variable_assignments_if_right_justify_option_given() a
   \   "  const ccccc = 333;",
   \ ]
 
+  call setline(1, s:JS)
+
   execute printf("%d,%dSimpleAlign = -justify right", firstlnum, lastlnum)
   call s:assert.equal(getline(firstlnum, lastlnum), formatted_lines)
 endfunction
 
 function s:command.aligns_variable_assignments_with_non_whitespace_char() abort
-  call setline(1, s:JS)
-
   let firstlnum = 2
   let lastlnum  = firstlnum + 2
 
@@ -249,13 +247,13 @@ function s:command.aligns_variable_assignments_with_non_whitespace_char() abort
   \   "  const ccccc = 333;",
   \ ]
 
+  call setline(1, s:JS)
+
   execute printf("%d,%dSimpleAlign =", firstlnum, lastlnum)
   call s:assert.equal(getline(firstlnum, lastlnum), formatted_lines)
 endfunction
 
 function s:command.aligns_variable_assignments_with_non_whitespace_char_and_justifying_to_right() abort
-  call setline(1, s:JS)
-
   let firstlnum = 2
   let lastlnum  = firstlnum + 2
 
@@ -265,13 +263,13 @@ function s:command.aligns_variable_assignments_with_non_whitespace_char_and_just
   \   "  const ccccc = 333;",
   \ ]
 
+  call setline(1, s:JS)
+
   execute printf("%d,%dSimpleAlign \\S\\+ -lpadding 0 -justify right", firstlnum, lastlnum)
   call s:assert.equal(getline(firstlnum, lastlnum), formatted_lines)
 endfunction
 
 function s:command.aligns_variable_assignments_and_value_appendings() abort
-  call setline(1, s:VIM_SCRIPT)
-
   let firstlnum = 2
   let lastlnum  = firstlnum + 2
 
@@ -281,13 +279,13 @@ function s:command.aligns_variable_assignments_and_value_appendings() abort
   \   "  let a += 3",
   \ ]
 
+  call setline(1, s:VIM_SCRIPT)
+
   execute printf("%d,%dSimpleAlign [\\ +]=", firstlnum, lastlnum)
   call s:assert.equal(getline(firstlnum, lastlnum), formatted_lines)
 endfunction
 
 function s:command.aligns_dictionary_items() abort
-  call setline(1, s:JS)
-
   let firstlnum = 7
   let lastlnum  = firstlnum + 2
 
@@ -297,13 +295,13 @@ function s:command.aligns_dictionary_items() abort
   \   "    CCCCC: ccccc,",
   \ ]
 
+  call setline(1, s:JS)
+
   execute printf("%d,%dSimpleAlign \\w\\+:", firstlnum, lastlnum)
   call s:assert.equal(getline(firstlnum, lastlnum), formatted_lines)
 endfunction
 
 function s:command.aligns_json_items() abort
-  call setline(1, s:JSON)
-
   let firstlnum = 2
   let lastlnum  = firstlnum + 2
 
@@ -313,13 +311,13 @@ function s:command.aligns_json_items() abort
   \   '  "CCCCC": "ccccc",',
   \ ]
 
+  call setline(1, s:JSON)
+
   execute printf("%d,%dSimpleAlign [^:\\ ]\\+:", firstlnum, lastlnum)
   call s:assert.equal(getline(firstlnum, lastlnum), formatted_lines)
 endfunction
 
 function s:command.aligns_with_non_whitespace_chars() abort
-  call setline(1, s:RUBY)
-
   let firstlnum = 1
   let lastlnum  = firstlnum + 1
 
@@ -327,6 +325,8 @@ function s:command.aligns_with_non_whitespace_chars() abort
   \   'p :foo,    a:   "a",   bbb:   "bbb", ccccc:   "ccccc"',
   \   'p :foobar, "a": "aaa", "bbb": "bbb", "ccccc": "ccccc"',
   \ ]
+
+  call setline(1, s:RUBY)
 
   execute printf("%d,%dSimpleAlign \\S\\+ -lpadding 0", firstlnum, lastlnum)
   call s:assert.equal(getline(firstlnum, lastlnum), formatted_lines)
@@ -338,6 +338,8 @@ function s:command.aligns_with_non_whitespace_chars() abort
   \   'p :foo,    :a   => "a",   :bbb   => "bbb", :ccccc   => "ccccc"',
   \   'p :foobar, :"a" => "aaa", :"bbb" => "bbb", :"ccccc" => "ccccc"',
   \ ]
+
+  call setline(1, s:RUBY)
 
   execute printf("%d,%dSimpleAlign \\S\\+ -lpadding 0", firstlnum, lastlnum)
   call s:assert.equal(getline(firstlnum, lastlnum), formatted_lines)
