@@ -274,6 +274,7 @@ function s:is_option.returns_false_for_invalid_option_argument() abort
   \   "count",
   \   "lpadding",
   \   "rpadding",
+  \   "justify",
   \   "unknown",
   \ ]
 
@@ -401,6 +402,51 @@ function s:normalize_value.normalize_option_value() abort
   \   #{ option_name: "rpadding", value: "3",     expected: 3 },
   \   #{ option_name: "justify",  value: "left",  expected: "left" },
   \   #{ option_name: "justify",  value: "right", expected: "right" },
+  \ ]
+
+  for testcase in testcases
+    call s:assert.equal(
+    \   simple_align#options#normalize_value(testcase.option_name, testcase.value),
+    \   testcase.expected,
+    \   "testcase: " .. string(testcase),
+    \ )
+  endfor
+endfunction
+
+function s:normalize_value.throws_error_if_option_name_is_invalid() abort
+  let testcases = [
+  \   #{ option_name: "",  value: "-1" },
+  \   #{ option_name: "-", value: "1" },
+  \   #{ option_name: "c", value: "22" },
+  \   #{ option_name: "l", value: "0" },
+  \   #{ option_name: "r", value: "2" },
+  \   #{ option_name: "j", value: "left" },
+  \ ]
+
+  for testcase in testcases
+    try
+      " E716: Key not present in Dictionary
+      Throws /:E716:/ :call simple_align#options#normalize_value(testcase.option_name, testcase.value)
+    catch
+      throw v:exception .. "\n\ntestcase: " .. string(testcase)
+    endtry
+  endfor
+endfunction
+
+function s:normalize_value.returns_invalid_value_if_value_is_invalid() abort
+  let testcases = [
+  \   #{ option_name: "count",    value: "",    expected: 0 },
+  \   #{ option_name: "count",    value: "x",   expected: 0 },
+  \   #{ option_name: "count",    value: "-2",  expected: -2 },
+  \   #{ option_name: "count",    value: ".",   expected: 0 },
+  \   #{ option_name: "lpadding", value: "",    expected: 0 },
+  \   #{ option_name: "lpadding", value: "x",   expected: 0 },
+  \   #{ option_name: "lpadding", value: "-1",  expected: -1 },
+  \   #{ option_name: "rpadding", value: "",    expected: 0 },
+  \   #{ option_name: "rpadding", value: "x",   expected: 0 },
+  \   #{ option_name: "rpadding", value: "1.5", expected: 1 },
+  \   #{ option_name: "justify",  value: "x",   expected: "x" },
+  \   #{ option_name: "justify",  value: "1",   expected: "1" },
   \ ]
 
   for testcase in testcases
