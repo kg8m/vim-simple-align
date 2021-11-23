@@ -121,6 +121,8 @@ function s:parse.overwrites_delimiter_with_latter_non_option_args_and_echo_info(
   \ ]
 
   for testcase in testcases
+    messages clear
+
     call s:assert.equal(
     \   simple_align#parser#parse(testcase.args),
     \   testcase.expected,
