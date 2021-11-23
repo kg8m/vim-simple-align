@@ -76,8 +76,8 @@ function simple_align#options#completion_candidates(arglead, cmdline, curpos) ab
   endif
 endfunction
 
-function simple_align#options#is_option(string) abort
-  return index(s:LIST, a:string) ># -1
+function simple_align#options#is_option(argument) abort
+  return index(s:LIST, a:argument) ># -1
 endfunction
 
 function simple_align#options#is_valid_value(option_name, value) abort
