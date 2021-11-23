@@ -83,15 +83,34 @@ def simple_align#options#is_option(argument: string): bool
   return index(LIST, argument) ># -1
 enddef
 
+
 def simple_align#options#is_valid_value(option_name: string, value: string): bool
   return value =~# VALID_VALUE_PATTERNS[option_name]
 enddef
+
+def simple_align#options#is_short_option_with_value(argument: string): bool
+  if stridx(argument, "-") !=# 0
+    return false
+  endif
+
+  const short_name = s:extract_short_name(argument)
+
+  if has_key(s:SHORT_NAMES, short_name)
+    const name  = s:short_name_to_long_name(short_name)
+    const value = s:extract_value_from_short_option_with_value(argument)
+
+    return simple_align#options#is_valid_value(name, value)
+  else
+    return false
+  endif
+enddef
+
 
 def simple_align#options#argument_to_name(argument: string): string
   const name = substitute(argument, '^-\+', "", "")
 
   if len(name) ==# 1
-    return get(SHORT_NAMES, name, name)
+    return s:short_name_to_long_name(name)
   else
     return name
   endif
@@ -99,6 +118,14 @@ enddef
 
 def simple_align#options#default_values(): dict<string>
   return DEFAULT_VALUES
+enddef
+
+def simple_align#options#extract_name_and_value(short_option_with_value: string): dict<string>
+  const short_name = s:extract_short_name(short_option_with_value)
+  const long_name  = s:short_name_to_long_name(short_name)
+  const value      = s:extract_value_from_short_option_with_value(short_option_with_value)
+
+  return { name: long_name, value: value }
 enddef
 
 def simple_align#options#normalize_value(option_name: string, value: string): any
@@ -109,4 +136,18 @@ def simple_align#options#normalize_value(option_name: string, value: string): an
   else
     return value
   endif
+enddef
+
+def s:extract_short_name(argument: string): string
+  # `-c777` => `c`
+  return strpart(argument, 1, 1)
+enddef
+
+def s:extract_value_from_short_option_with_value(argument: string): string
+  # `-c777` => `777`
+  return strpart(argument, 2)
+enddef
+
+def s:short_name_to_long_name(short_name: string): string
+  return get(s:SHORT_NAMES, short_name, short_name)
 enddef

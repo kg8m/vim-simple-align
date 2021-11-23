@@ -105,6 +105,35 @@ function s:parse.returns_given_delimiter_and_options_if_delimiter_and_valid_shor
   endfor
 endfunction
 
+function s:parse.returns_given_delimiter_and_options_if_delimiter_and_valid_short_options_with_values_given() abort
+  let testcases = [
+  \   #{
+  \     args:     ["|", "-l10"],
+  \     expected: #{ delimiter: "|", options: #{ count: -1, lpadding: 10, rpadding: 1, justify: "left" } },
+  \   },
+  \   #{
+  \     args:     ["=", "-c1"],
+  \     expected: #{ delimiter: "=", options: #{ count: 1, lpadding: 1, rpadding: 1, justify: "left" } },
+  \   },
+  \   #{
+  \     args:     ["\\s", "-l0", "-r0"],
+  \     expected: #{ delimiter: "\\s", options: #{ count: -1, lpadding: 0, rpadding: 0, justify: "left" } },
+  \   },
+  \   #{
+  \     args:     ["[^: ]\\+:", "-c2", "-l0", "-r1"],
+  \     expected: #{ delimiter: "[^: ]\\+:", options: #{ count: 2, lpadding: 0, rpadding: 1, justify: "left" } },
+  \   },
+  \ ]
+
+  for testcase in testcases
+    call s:assert.equal(
+    \   simple_align#parser#parse(testcase.args),
+    \   testcase.expected,
+    \   "testcase: " .. string(testcase),
+    \ )
+  endfor
+endfunction
+
 function s:parse.ignores_invalid_options_and_echo_error_message_if_invalid_value() abort
   let expected_options = #{
   \   count:    -1,
@@ -191,6 +220,19 @@ function s:parse.overwrites_options_with_latter_options_and_echo_info() abort
   \   },
   \   #{
   \     args:     ["|", "-l", "0", "-c", "1", "-l", "1"],
+  \     expected: #{ delimiter: "|", options: #{ count: 1, lpadding: 1, rpadding: 1, justify: "left" } },
+  \   },
+  \
+  \   #{
+  \     args:     ["|", "-c1", "-c2"],
+  \     expected: #{ delimiter: "|", options: #{ count: 2, lpadding: 1, rpadding: 1, justify: "left" } },
+  \   },
+  \   #{
+  \     args:     ["|", "-l0", "-l1"],
+  \     expected: #{ delimiter: "|", options: #{ count: -1, lpadding: 1, rpadding: 1, justify: "left" } },
+  \   },
+  \   #{
+  \     args:     ["|", "-l0", "-c1", "-l1"],
   \     expected: #{ delimiter: "|", options: #{ count: 1, lpadding: 1, rpadding: 1, justify: "left" } },
   \   },
   \ ]

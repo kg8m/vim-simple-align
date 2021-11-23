@@ -11,6 +11,14 @@ def simple_align#parser#parse(args: list<string>): dict<any>
       if simple_align#options#is_option(item)
         const option_name = simple_align#options#argument_to_name(item)
         option_waiting_for_value = option_name
+      elseif simple_align#options#is_short_option_with_value(item)
+        const extracted = simple_align#options#extract_name_and_value(item)
+
+        if has_key(options, extracted.name)
+          s:notify_option_value_overwritten(extracted.name, options[extracted.name], extracted.value)
+        endif
+
+        options[extracted.name] = extracted.value
       else
         if !empty(delimiter)
           simple_align#logger#info(
