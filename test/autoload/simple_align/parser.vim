@@ -166,7 +166,7 @@ function s:parse.overwrites_delimiter_with_latter_non_option_args_and_echo_info(
   endfor
 endfunction
 
-function s:parse.overwrites_options_with_latter_options() abort
+function s:parse.overwrites_options_with_latter_options_and_echo_info() abort
   let testcases = [
   \   #{
   \     args:     ["|", "-count", "1", "-count", "2"],
@@ -196,9 +196,17 @@ function s:parse.overwrites_options_with_latter_options() abort
   \ ]
 
   for testcase in testcases
+    messages clear
+
     call s:assert.equal(
     \   simple_align#parser#parse(testcase.args),
     \   testcase.expected,
+    \   "testcase: " .. string(testcase),
+    \ )
+
+    call s:assert.match(
+    \   execute("messages"),
+    \   '\[simple-align\] INFO - Value of option .* has been overwritten from .* to',
     \   "testcase: " .. string(testcase),
     \ )
   endfor

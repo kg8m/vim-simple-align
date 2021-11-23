@@ -25,6 +25,10 @@ def simple_align#parser#parse(args: list<string>): dict<any>
       option_waiting_for_value = ""
 
       if simple_align#options#is_valid_value(option_name, item)
+        if has_key(options, option_name)
+          s:notify_option_value_overwritten(option_name, options[option_name], item)
+        endif
+
         options[option_name] = item
       else
         simple_align#logger#error(
@@ -39,4 +43,10 @@ def simple_align#parser#parse(args: list<string>): dict<any>
   endfor
 
   return { delimiter: delimiter, options: options }
+enddef
+
+def s:notify_option_value_overwritten(option_name: string, old_value: any, new_value: any): void
+  simple_align#logger#info(
+    printf("Value of option `%s` has been overwritten from `%s` to `%s`.", option_name, old_value, new_value)
+  )
 enddef
