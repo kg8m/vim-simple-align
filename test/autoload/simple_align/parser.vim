@@ -102,7 +102,7 @@ function s:parse.ignores_invalid_options_and_echo_error_message_if_invalid_value
 
     call get(s:assert, testcase.echo ? "match" : "not_match")(
     \   execute("messages"),
-    \   'Invalid value',
+    \   '\[simple-align\] ERROR - Invalid value .* for the option',
     \   "testcase: " .. string(testcase),
     \ )
   endfor
@@ -131,7 +131,7 @@ function s:parse.overwrites_delimiter_with_latter_non_option_args_and_echo_info(
 
     call s:assert.match(
     \   execute("messages"),
-    \   'Delimiter .* has been overwritten by',
+    \   '\[simple-align\] INFO - Delimiter .* has been overwritten by',
     \   "testcase: " .. string(testcase),
     \ )
   endfor
