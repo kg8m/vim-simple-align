@@ -286,6 +286,89 @@ function s:is_option.returns_false_for_invalid_option_argument() abort
   endfor
 endfunction
 
+let s:is_short_option_with_value = themis#suite("simple_align#options#is_short_option_with_value")
+function s:is_short_option_with_value.returns_true_for_valid_short_option_with_value_argument() abort
+  let arguments = [
+  \   "-c1",
+  \   "-c777",
+  \   "-c-1",
+  \   "-l2",
+  \   "-l11",
+  \   "-r0",
+  \   "-r22",
+  \   "-jleft",
+  \   "-jright",
+  \ ]
+
+  for argument in arguments
+    call s:assert.true(
+    \   simple_align#options#is_short_option_with_value(argument),
+    \   "argument: " .. argument,
+    \ )
+  endfor
+endfunction
+
+function s:is_short_option_with_value.returns_false_for_only_valid_short_option_name_argument() abort
+  let arguments = [
+  \   "-c",
+  \   "-l",
+  \   "-r",
+  \   "-j",
+  \ ]
+
+  for argument in arguments
+    call s:assert.false(
+    \   simple_align#options#is_short_option_with_value(argument),
+    \   "argument: " .. argument,
+    \ )
+  endfor
+endfunction
+
+function s:is_short_option_with_value.returns_false_for_valid_short_option_name_with_invalid_value_argument() abort
+  let arguments = [
+  \   "-c",
+  \   "-cx",
+  \   "-c-2",
+  \   "-c.",
+  \   "-l",
+  \   "-lx",
+  \   "-l-1",
+  \   "-r",
+  \   "-rx",
+  \   "-r1.5",
+  \   "-j",
+  \   "-jx",
+  \   "-j1",
+  \ ]
+
+  for argument in arguments
+    call s:assert.false(
+    \   simple_align#options#is_short_option_with_value(argument),
+    \   "argument: " .. argument,
+    \ )
+  endfor
+endfunction
+
+function s:is_short_option_with_value.returns_false_for_invalid_argument() abort
+  let arguments = [
+  \   "",
+  \   "-",
+  \   "-x",
+  \   "1",
+  \   "c",
+  \   "l",
+  \   "r",
+  \   "j",
+  \ ]
+
+  for argument in arguments
+    call s:assert.false(
+    \   simple_align#options#is_short_option_with_value(argument),
+    \   "argument: " .. argument,
+    \ )
+  endfor
+endfunction
+
 let s:is_valid_value = themis#suite("simple_align#options#is_valid_value")
 function s:is_valid_value.returns_true_for_valid_option_name_and_value() abort
   let testcases = [
@@ -384,6 +467,84 @@ function s:argument_to_name.trims_leading_hyphens() abort
   for testcase in testcases
     call s:assert.equal(
     \   simple_align#options#argument_to_name(testcase.argument),
+    \   testcase.expected,
+    \   "testcase: " .. string(testcase),
+    \ )
+  endfor
+endfunction
+
+let s:extract_name_and_value = themis#suite("simple_align#options#extract_name_and_value")
+function s:extract_name_and_value.extracts_option_name_and_value_from_valid_short_option_with_value() abort
+  let testcases = [
+  \   #{ given: "-c-1",    expected: #{ name: "count", value: "-1" } },
+  \   #{ given: "-c1",     expected: #{ name: "count", value: "1" } },
+  \   #{ given: "-c22",    expected: #{ name: "count", value: "22" } },
+  \   #{ given: "-l0",     expected: #{ name: "lpadding", value: "0" } },
+  \   #{ given: "-l2",     expected: #{ name: "lpadding", value: "2" } },
+  \   #{ given: "-r0",     expected: #{ name: "rpadding", value: "0" } },
+  \   #{ given: "-r3",     expected: #{ name: "rpadding", value: "3" } },
+  \   #{ given: "-jleft",  expected: #{ name: "justify", value: "left" } },
+  \   #{ given: "-jright", expected: #{ name: "justify", value: "right" } },
+  \ ]
+
+  for testcase in testcases
+    call s:assert.equal(
+    \   simple_align#options#extract_name_and_value(testcase.given),
+    \   testcase.expected,
+    \   "testcase: " .. string(testcase),
+    \ )
+  endfor
+endfunction
+
+function s:extract_name_and_value.does_not_throw_error_but_its_result_is_invalid_if_short_option_name_is_invalid() abort
+  let testcases = [
+  \   #{ given: "",      expected: #{ name: "", value: "" } },
+  \   #{ given: "-",     expected: #{ name: "", value: "" } },
+  \   #{ given: "-x",    expected: #{ name: "x", value: "" } },
+  \   #{ given: "-x1",   expected: #{ name: "x", value: "1" } },
+  \   #{ given: "-x777", expected: #{ name: "x", value: "777" } },
+  \   #{ given: "c",     expected: #{ name: "", value: "" } },
+  \   #{ given: "c1",    expected: #{ name: "1", value: "" } },
+  \   #{ given: "c12",   expected: #{ name: "1", value: "2" } },
+  \   #{ given: "l",     expected: #{ name: "", value: "" } },
+  \   #{ given: "l1",    expected: #{ name: "1", value: "" } },
+  \   #{ given: "l12",   expected: #{ name: "1", value: "2" } },
+  \   #{ given: "r",     expected: #{ name: "", value: "" } },
+  \   #{ given: "r1",    expected: #{ name: "1", value: "" } },
+  \   #{ given: "r12",   expected: #{ name: "1", value: "2" } },
+  \   #{ given: "j",     expected: #{ name: "", value: "" } },
+  \   #{ given: "jleft", expected: #{ name: "lpadding", value: "eft" } },
+  \ ]
+
+  for testcase in testcases
+    call s:assert.equal(
+    \   simple_align#options#extract_name_and_value(testcase.given),
+    \   testcase.expected,
+    \   "testcase: " .. string(testcase),
+    \ )
+  endfor
+endfunction
+
+function s:extract_name_and_value.extracts_option_name_and_invalid_value_if_value_is_invalid() abort
+  let testcases = [
+  \   #{ given: "-c",    expected: #{ name: "count", value: "" } },
+  \   #{ given: "-cx",   expected: #{ name: "count", value: "x" } },
+  \   #{ given: "-c-2",  expected: #{ name: "count", value: "-2" } },
+  \   #{ given: "-c.",   expected: #{ name: "count", value: "." } },
+  \   #{ given: "-l",    expected: #{ name: "lpadding", value: "" } },
+  \   #{ given: "-lx",   expected: #{ name: "lpadding", value: "x" } },
+  \   #{ given: "-l-1",  expected: #{ name: "lpadding", value: "-1" } },
+  \   #{ given: "-r",    expected: #{ name: "rpadding", value: "" } },
+  \   #{ given: "-rx",   expected: #{ name: "rpadding", value: "x" } },
+  \   #{ given: "-r1.5", expected: #{ name: "rpadding", value: "1.5" } },
+  \   #{ given: "-j",    expected: #{ name: "justify", value: "" } },
+  \   #{ given: "-jx",   expected: #{ name: "justify", value: "x" } },
+  \   #{ given: "-j1",   expected: #{ name: "justify", value: "1" } },
+  \ ]
+
+  for testcase in testcases
+    call s:assert.equal(
+    \   simple_align#options#extract_name_and_value(testcase.given),
     \   testcase.expected,
     \   "testcase: " .. string(testcase),
     \ )

@@ -9,6 +9,14 @@ function simple_align#parser#parse(args) abort
       if simple_align#options#is_option(item)
         let option_name = simple_align#options#argument_to_name(item)
         let option_waiting_for_value = option_name
+      elseif simple_align#options#is_short_option_with_value(item)
+        let extracted = simple_align#options#extract_name_and_value(item)
+
+        if has_key(options, extracted.name)
+          call s:notify_option_value_overwritten(extracted.name, options[extracted.name], extracted.value)
+        endif
+
+        let options[extracted.name] = extracted.value
       else
         if !empty(delimiter)
           call simple_align#logger#info(

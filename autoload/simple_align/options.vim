@@ -80,6 +80,23 @@ function simple_align#options#is_option(argument) abort
   return index(s:LIST, a:argument) ># -1
 endfunction
 
+function simple_align#options#is_short_option_with_value(argument) abort
+  if stridx(a:argument, "-") !=# 0
+    return v:false
+  endif
+
+  let short_name = s:extract_short_name(a:argument)
+
+  if has_key(s:SHORT_NAMES, short_name)
+    let name  = s:short_name_to_long_name(short_name)
+    let value = s:extract_value_from_short_option_with_value(a:argument)
+
+    return simple_align#options#is_valid_value(name, value)
+  else
+    return v:false
+  endif
+endfunction
+
 function simple_align#options#is_valid_value(option_name, value) abort
   return a:value =~# s:VALID_VALUE_PATTERNS[a:option_name]
 endfunction
@@ -88,10 +105,18 @@ function simple_align#options#argument_to_name(argument) abort
   let name = substitute(a:argument, '^-\+', "", "")
 
   if len(name) ==# 1
-    return get(s:SHORT_NAMES, name, name)
+    return s:short_name_to_long_name(name)
   else
     return name
   endif
+endfunction
+
+function simple_align#options#extract_name_and_value(short_option_with_value) abort
+  let short_name = s:extract_short_name(a:short_option_with_value)
+  let long_name  = s:short_name_to_long_name(short_name)
+  let value      = s:extract_value_from_short_option_with_value(a:short_option_with_value)
+
+  return #{ name: long_name, value: value }
 endfunction
 
 function simple_align#options#default_values() abort
@@ -106,4 +131,18 @@ function simple_align#options#normalize_value(option_name, value) abort
   else
     return a:value
   endif
+endfunction
+
+function s:extract_short_name(argument) abort
+  " `-c777` => `c`
+  return a:argument[1]
+endfunction
+
+function s:extract_value_from_short_option_with_value(argument) abort
+  " `-c777` => `777`
+  return a:argument[2 : -1]
+endfunction
+
+function s:short_name_to_long_name(short_name) abort
+  return get(s:SHORT_NAMES, a:short_name, a:short_name)
 endfunction
