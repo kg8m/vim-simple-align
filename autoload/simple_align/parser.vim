@@ -23,6 +23,10 @@ function simple_align#parser#parse(args) abort
       let option_waiting_for_value = ""
 
       if simple_align#options#is_valid_value(option_name, item)
+        if has_key(options, option_name)
+          call s:notify_option_value_overwritten(option_name, options[option_name], item)
+        endif
+
         let options[option_name] = item
       else
         call simple_align#logger#error(
@@ -37,4 +41,10 @@ function simple_align#parser#parse(args) abort
   endfor
 
   return #{ delimiter: delimiter, options: options }
+endfunction
+
+function s:notify_option_value_overwritten(option_name, old_value, new_value) abort
+  call simple_align#logger#info(
+  \   printf("Value of option `%s` has been overwritten from `%s` to `%s`.", a:option_name, a:old_value, a:new_value)
+  \ )
 endfunction
