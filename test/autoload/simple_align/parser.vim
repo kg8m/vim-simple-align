@@ -76,6 +76,35 @@ function s:parse.returns_given_delimiter_and_options_if_delimiter_and_valid_opti
   endfor
 endfunction
 
+function s:parse.returns_given_delimiter_and_options_if_delimiter_and_valid_short_options_given() abort
+  let testcases = [
+  \   #{
+  \     args:     ["|", "-l", "10"],
+  \     expected: #{ delimiter: "|", options: #{ count: -1, lpadding: 10, rpadding: 1, justify: "left" } },
+  \   },
+  \   #{
+  \     args:     ["=", "-c", "1"],
+  \     expected: #{ delimiter: "=", options: #{ count: 1, lpadding: 1, rpadding: 1, justify: "left" } },
+  \   },
+  \   #{
+  \     args:     ["\\s", "-l", "0", "-r", "0"],
+  \     expected: #{ delimiter: "\\s", options: #{ count: -1, lpadding: 0, rpadding: 0, justify: "left" } },
+  \   },
+  \   #{
+  \     args:     ["[^: ]\\+:", "-c", "2", "-l", "0", "-r", "1"],
+  \     expected: #{ delimiter: "[^: ]\\+:", options: #{ count: 2, lpadding: 0, rpadding: 1, justify: "left" } },
+  \   },
+  \ ]
+
+  for testcase in testcases
+    call s:assert.equal(
+    \   simple_align#parser#parse(testcase.args),
+    \   testcase.expected,
+    \   "testcase: " .. string(testcase),
+    \ )
+  endfor
+endfunction
+
 function s:parse.ignores_invalid_options_and_echo_error_message_if_invalid_value() abort
   let expected_options = #{
   \   count:    -1,
@@ -149,6 +178,19 @@ function s:parse.overwrites_options_with_latter_options() abort
   \   },
   \   #{
   \     args:     ["|", "-lpadding", "0", "-count", "1", "-lpadding", "1"],
+  \     expected: #{ delimiter: "|", options: #{ count: 1, lpadding: 1, rpadding: 1, justify: "left" } },
+  \   },
+  \
+  \   #{
+  \     args:     ["|", "-c", "1", "-c", "2"],
+  \     expected: #{ delimiter: "|", options: #{ count: 2, lpadding: 1, rpadding: 1, justify: "left" } },
+  \   },
+  \   #{
+  \     args:     ["|", "-l", "0", "-l", "1"],
+  \     expected: #{ delimiter: "|", options: #{ count: -1, lpadding: 1, rpadding: 1, justify: "left" } },
+  \   },
+  \   #{
+  \     args:     ["|", "-l", "0", "-c", "1", "-l", "1"],
   \     expected: #{ delimiter: "|", options: #{ count: 1, lpadding: 1, rpadding: 1, justify: "left" } },
   \   },
   \ ]
