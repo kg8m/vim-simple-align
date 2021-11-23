@@ -245,8 +245,8 @@ function s:completion_candidates.returns_list_of_matched_option_values_if_prev_l
 endfunction
 
 let s:is_option = themis#suite("simple_align#options#is_option")
-function s:is_option.returns_true_for_valid_option_string() abort
-  let option_names = [
+function s:is_option.returns_true_for_valid_option_argument() abort
+  let arguments = [
   \   "-count",
   \   "-lpadding",
   \   "-rpadding",
@@ -257,16 +257,16 @@ function s:is_option.returns_true_for_valid_option_string() abort
   \   "-j",
   \ ]
 
-  for option_name in option_names
+  for argument in arguments
     call s:assert.true(
-    \   simple_align#options#is_option(option_name),
-    \   "option_name: " .. option_name,
+    \   simple_align#options#is_option(argument),
+    \   "argument: " .. argument,
     \ )
   endfor
 endfunction
 
-function s:is_option.returns_false_for_invalid_option_string() abort
-  let option_names = [
+function s:is_option.returns_false_for_invalid_option_argument() abort
+  let arguments = [
   \   "",
   \   "-",
   \   "-x",
@@ -277,10 +277,10 @@ function s:is_option.returns_false_for_invalid_option_string() abort
   \   "unknown",
   \ ]
 
-  for option_name in option_names
+  for argument in arguments
     call s:assert.false(
-    \   simple_align#options#is_option(option_name),
-    \   "option_name: " .. option_name,
+    \   simple_align#options#is_option(argument),
+    \   "argument: " .. argument,
     \ )
   endfor
 endfunction

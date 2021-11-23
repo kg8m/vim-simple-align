@@ -79,8 +79,8 @@ def simple_align#options#completion_candidates(arglead: string, cmdline: string,
   endif
 enddef
 
-def simple_align#options#is_option(string: string): bool
-  return index(LIST, string) ># -1
+def simple_align#options#is_option(argument: string): bool
+  return index(LIST, argument) ># -1
 enddef
 
 def simple_align#options#is_valid_value(option_name: string, value: string): bool
