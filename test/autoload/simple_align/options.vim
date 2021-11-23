@@ -391,7 +391,7 @@ function s:argument_to_name.trims_leading_hyphens() abort
 endfunction
 
 let s:normalize_value = themis#suite("simple_align#options#normalize_value")
-function s:normalize_value.normalize_option_value() abort
+function s:normalize_value.normalizes_option_value() abort
   let testcases = [
   \   #{ option_name: "count",    value: "-1",    expected: -1 },
   \   #{ option_name: "count",    value: "1",     expected: 1 },
