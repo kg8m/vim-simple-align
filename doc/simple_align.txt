@@ -104,9 +104,6 @@ available on `vim9` branch.
 	call dein#add("kg8m/vim-simple-align", { "rev": "vim9" })
 <
 
-Note: Vim9 script is experimental feature. It is not stable. Vim9 script
-version may be sometimes broken after you upgrade Vim.
-
 ==============================================================================
 Requirements                                   *vim-simple-align-requirements*
 
