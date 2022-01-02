@@ -242,7 +242,7 @@ Ruby old Hash syntax:
 ```
 
 
-### Align variable assginments
+### Align variable assignments
 
 #### ❌ Not aligned
 
