@@ -398,8 +398,6 @@ You can use Vim9 script version if you use Vim 8.2.2261+. Vim9 script version is
 call dein#add("kg8m/vim-simple-align", { "rev": "vim9" })
 ```
 
-Note: Vim9 script is experimental feature. It is not stable. Vim9 script version may be sometimes broken after you upgrade Vim.
-
 
 Requirements
 --------------------------------------------------
