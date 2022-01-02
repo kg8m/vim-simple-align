@@ -31,7 +31,13 @@ Commands                                           *vim-simple-align-commands*
 Usage:
 
 >
-	:{RANGE}SimpleAlign {DELIMITER}[ {OPTIONS}]
+	:{RANGE}SimpleAlign {DELIMITER}
+<
+
+Or
+
+>
+	:{RANGE}SimpleAlign {DELIMITER} {OPTIONS}
 <
 
 Delimiter is Vim's regular expression. Some characters may need to be escaped.
@@ -86,10 +92,11 @@ If you use dein.vim (https://github.com/Shougo/dein.vim):
 <
 
 Note: dein.vim's lazy loading feature with `on_cmd` option is not recommended
-for |vim-simple-align|. You will see `E471: Argument required: ...` if so.
-Anyway, lazy loading of |vim-simple-align| doesn't make Vim's startup faster
-because |vim-simple-align| just defines 1 command when added to `runtimepath`.
-dein.vim's lazy loading with `on_cmd` also defines a dummy command.
+for |vim-simple-align|. You will see `E471: Argument required: ...` if so. To
+tell the truth, lazy loading of |vim-simple-align| doesn't make Vim's startup
+faster. On the one hand, |vim-simple-align| just defines 1 command when added
+to `runtimepath`. On the other hand, dein.vim's lazy loading with `on_cmd`
+also defines a dummy command.
 
 ==============================================================================
 Vim9 script                                     *vim-simple-align-vim9-script*
