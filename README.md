@@ -20,7 +20,13 @@ vim-simple-align provides only 1 command: `:SimpleAlign`.
 Usage:
 
 ```vim
-:{RANGE}SimpleAlign {DELIMITER}[ {OPTIONS}]
+:{RANGE}SimpleAlign {DELIMITER}
+```
+
+Or
+
+```vim
+:{RANGE}SimpleAlign {DELIMITER} {OPTIONS}
 ```
 
 Delimiter is Vim's regular expression. Some characters may need to be escaped.
@@ -63,7 +69,7 @@ Examples
 
 ### Align Markdown table
 
-#### Not aligned
+#### ❌ Not aligned
 
 ```md
 a | bbb | ccccc
@@ -80,14 +86,14 @@ a | bbb | ccccc
 ```
 
 
-#### Command
+#### 🔧 Command
 
 ```vim
 :1,4SimpleAlign |
 ```
 
 
-#### Aligned
+#### ⭕️ Aligned
 
 ```md
 a      | bbb | ccccc
@@ -106,7 +112,7 @@ a      | bbb | ccccc
 
 ### Align Markdown table with justifying to right
 
-#### Not aligned
+#### ❌ Not aligned
 
 ```md
 a | bbb | ccccc
@@ -123,14 +129,14 @@ a | bbb | ccccc
 ```
 
 
-#### Command
+#### 🔧 Command
 
 ```vim
 :1,4SimpleAlign | -justify right
 ```
 
 
-#### Aligned
+#### ⭕️ Aligned
 
 ```md
      a | bbb | ccccc
@@ -149,7 +155,9 @@ a | bbb | ccccc
 
 ### Align JSON, dictionary/hash items
 
-#### Not aligned
+#### ❌ Not aligned
+
+JSON:
 
 ```json
 {
@@ -159,6 +167,8 @@ a | bbb | ccccc
 }
 ```
 
+JavaScript dictionary:
+
 ```js
 {
   a: "a",
@@ -166,6 +176,8 @@ a | bbb | ccccc
   ccccc: "ccccc",
 }
 ```
+
+Ruby old Hash syntax:
 
 ```rb
 {
@@ -176,7 +188,7 @@ a | bbb | ccccc
 ```
 
 
-#### Command
+#### 🔧 Command
 
 For JSON:
 
@@ -197,7 +209,9 @@ For Ruby old Hash syntax:
 ```
 
 
-#### Aligned
+#### ⭕️ Aligned
+
+JSON:
 
 ```json
 {
@@ -207,6 +221,8 @@ For Ruby old Hash syntax:
 }
 ```
 
+JavaScript dictionary:
+
 ```js
 {
   a:     "a",
@@ -214,6 +230,8 @@ For Ruby old Hash syntax:
   ccccc: "ccccc",
 }
 ```
+
+Ruby old Hash syntax:
 
 ```rb
 {
@@ -226,13 +244,17 @@ For Ruby old Hash syntax:
 
 ### Align variable assginments
 
-#### Not aligned
+#### ❌ Not aligned
+
+Basic case:
 
 ```js
 const a = "a";
 const bbb = "bbb";
 const ccccc = "ccccc";
 ```
+
+Case when multiple `=`s exist:
 
 ```js
 const a = "a";
@@ -241,13 +263,15 @@ const ccccc = "ccccc";
 const d = (a === bbb)
 ```
 
+`=` and `+=`:
+
 ```rb
 a = "a"
 a += "a"
 ```
 
 
-#### Command
+#### 🔧 Command
 
 For basic case:
 
@@ -268,13 +292,17 @@ For `=` and `+=`:
 ```
 
 
-#### Aligned
+#### ⭕️ Aligned
+
+Basic case:
 
 ```js
 const a     = "a";
 const bbb   = "bbb";
 const ccccc = "ccccc";
 ```
+
+Case when multiple `=`s exist:
 
 ```js
 const a     = "a";
@@ -282,6 +310,8 @@ const bbb   = "bbb";
 const ccccc = "ccccc";
 const d     = (a === bbb)
 ```
+
+`=` and `+=`:
 
 ```rb
 a  = "a"
@@ -291,13 +321,17 @@ a += "a"
 
 ### Align output/result comments
 
-#### Not aligned
+#### ❌ Not aligned
+
+JavaScript:
 
 ```js
 a() //=> "a"
 bbb() //=> "bbb"
 ccccc() //=> "ccccc"
 ```
+
+Ruby:
 
 ```rb
 a #=> "a"
@@ -306,7 +340,7 @@ ccccc #=> "ccccc"
 ```
 
 
-#### Command
+#### 🔧 Command
 
 For JavaScript:
 
@@ -321,13 +355,17 @@ For Ruby:
 ```
 
 
-#### Aligned
+#### ⭕️ Aligned
+
+JavaScript:
 
 ```js
 a()      //=> "a"
 bbb()    //=> "bbb"
 ccccc()  //=> "ccccc"
 ```
+
+Ruby:
 
 ```rb
 a      #=> "a"
@@ -338,7 +376,7 @@ ccccc  #=> "ccccc"
 
 ### Align non-whitespace characters
 
-#### Not aligned
+#### ❌ Not aligned
 
 ```rb
 t.belongs_to :user, null: false
@@ -348,14 +386,14 @@ t.boolean :foo, null: true, default: false
 ```
 
 
-#### Command
+#### 🔧 Command
 
 ```vim
 :1,4SimpleAlign \S\+ -lpadding 0
 ```
 
 
-#### Aligned
+#### ⭕️ Aligned
 
 ```rb
 t.belongs_to :user,   null: false
@@ -386,7 +424,7 @@ If you use [dein.vim](https://github.com/Shougo/dein.vim):
 call dein#add("kg8m/vim-simple-align")
 ```
 
-Note: dein.vim's lazy loading feature with `on_cmd` option is not recommended for vim-simple-align. You will see `E471: Argument required: '<,'>SimpleAlign` if so. Anyway, lazy loading of vim-simple-align doesn't make Vim's startup faster because vim-simple-align just defines 1 command when added to `runtimepath`. dein.vim's lazy loading with `on_cmd` also defines a dummy command.
+Note: dein.vim's lazy loading feature with `on_cmd` option is not recommended for vim-simple-align. You will see `E471: Argument required: ...` if so. To tell the truth, lazy loading of vim-simple-align doesn't make Vim's startup faster. On the one hand, vim-simple-align just defines 1 command when added to `runtimepath`. On the other hand, dein.vim's lazy loading with `on_cmd` also defines a dummy command.
 
 
 Vim9 script
