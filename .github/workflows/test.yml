@@ -18,6 +18,8 @@ jobs:
           - nightly
         include:
           - neovim: false
+            version: v8.2.4000
+          - neovim: false
             version: v8.2.3000
           - neovim: false
             version: v8.2.2000
