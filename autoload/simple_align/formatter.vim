@@ -6,14 +6,14 @@ def simple_align#formatter#format(first_lnum: number, tokens_list: list<list<str
 
   try
     set lazyredraw
-    s:format(first_lnum, tokens_list, token_widths, options)
+    s:_format(first_lnum, tokens_list, token_widths, options)
   finally
     cursor(cursor.lnum, cursor.col)
     &lazyredraw = lazyredraw
   endtry
 enddef
 
-def s:format(firstlnum: number, tokens_list: list<list<string>>, token_widths: list<number>, options: dict<any>): void
+def s:_format(firstlnum: number, tokens_list: list<list<string>>, token_widths: list<number>, options: dict<any>): void
   const lastlnum = firstlnum + len(tokens_list) - 1
   const indent   = s:detect_indent(firstlnum, lastlnum)
   const lines    = mapnew(tokens_list, (index, tokens) => s:tokens_to_line(firstlnum + index, indent, tokens, token_widths, options))
