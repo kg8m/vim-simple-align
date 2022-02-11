@@ -1,6 +1,6 @@
 let s:assert = themis#helper("assert")
 
-let s:parse = themis#suite("simple_align#parser#parse")
+let s:parse = themis#suite("simple_align#parser#Parse")
 function s:parse.returns_given_delimiter_and_default_options_if_only_delimiter_given() abort
   let args_list = [
   \   ["|"],
@@ -11,7 +11,7 @@ function s:parse.returns_given_delimiter_and_default_options_if_only_delimiter_g
 
   for args in args_list
     call s:assert.equal(
-    \   simple_align#parser#parse(args),
+    \   simple_align#parser#Parse(args),
     \   #{ delimiter: args[0], options: #{ count: -1, lpadding: 1, rpadding: 1, justify: "left" } },
     \   "args: " .. string(args),
     \ )
@@ -40,7 +40,7 @@ function s:parse.returns_given_delimiter_and_options_if_delimiter_and_valid_opti
 
   for testcase in testcases
     call s:assert.equal(
-    \   simple_align#parser#parse(testcase.args),
+    \   simple_align#parser#Parse(testcase.args),
     \   testcase.expected,
     \   "testcase: " .. string(testcase),
     \ )
@@ -69,7 +69,7 @@ function s:parse.returns_given_delimiter_and_options_if_delimiter_and_valid_opti
 
   for testcase in testcases
     call s:assert.equal(
-    \   simple_align#parser#parse(testcase.args),
+    \   simple_align#parser#Parse(testcase.args),
     \   testcase.expected,
     \   "testcase: " .. string(testcase),
     \ )
@@ -98,7 +98,7 @@ function s:parse.returns_given_delimiter_and_options_if_delimiter_and_valid_shor
 
   for testcase in testcases
     call s:assert.equal(
-    \   simple_align#parser#parse(testcase.args),
+    \   simple_align#parser#Parse(testcase.args),
     \   testcase.expected,
     \   "testcase: " .. string(testcase),
     \ )
@@ -127,7 +127,7 @@ function s:parse.returns_given_delimiter_and_options_if_delimiter_and_valid_shor
 
   for testcase in testcases
     call s:assert.equal(
-    \   simple_align#parser#parse(testcase.args),
+    \   simple_align#parser#Parse(testcase.args),
     \   testcase.expected,
     \   "testcase: " .. string(testcase),
     \ )
@@ -153,7 +153,7 @@ function s:parse.ignores_invalid_options_and_echo_error_message_if_invalid_value
     messages clear
 
     call s:assert.equal(
-    \   simple_align#parser#parse(testcase.args),
+    \   simple_align#parser#Parse(testcase.args),
     \   testcase.expected,
     \   "testcase: " .. string(testcase),
     \ )
@@ -182,7 +182,7 @@ function s:parse.overwrites_delimiter_with_latter_non_option_args_and_echo_info(
     messages clear
 
     call s:assert.equal(
-    \   simple_align#parser#parse(testcase.args),
+    \   simple_align#parser#Parse(testcase.args),
     \   testcase.expected,
     \   "testcase: " .. string(testcase),
     \ )
@@ -241,7 +241,7 @@ function s:parse.overwrites_options_with_latter_options_and_echo_info() abort
     messages clear
 
     call s:assert.equal(
-    \   simple_align#parser#parse(testcase.args),
+    \   simple_align#parser#Parse(testcase.args),
     \   testcase.expected,
     \   "testcase: " .. string(testcase),
     \ )
@@ -256,7 +256,7 @@ endfunction
 
 function s:parse.returns_empty_delimiter_and_default_options_if_empty_args_given() abort
   call s:assert.equal(
-  \   simple_align#parser#parse([]),
+  \   simple_align#parser#Parse([]),
   \   #{ delimiter: "", options: #{ count: -1, lpadding: 1, rpadding: 1, justify: "left" } },
   \ )
 endfunction

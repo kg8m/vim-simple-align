@@ -43,16 +43,16 @@ let s:DEFAULT_OPTIONS = #{
 \   justify:  "left",
 \ }
 
-let s:format = themis#suite("simple_align#formatter#format")
+let s:format = themis#suite("simple_align#formatter#Format")
 function s:format.aligns_tokens_with_1_space_around_each_delimiter_and_justifying_to_left_if_default_options_given() abort
   call setline(1, s:MARKDOWN_TABLE)
 
   let firstlnum    = 1
   let lastlnum     = firstlnum + 4
-  let lines        = simple_align#lines#get(firstlnum, lastlnum)
+  let lines        = simple_align#lines#Get(firstlnum, lastlnum)
   let options      = s:DEFAULT_OPTIONS
-  let tokens_list  = simple_align#tokenizer#lines_to_tokens_list(lines, "|", options)
-  let token_widths = simple_align#calculator#calculate_token_widths(tokens_list)
+  let tokens_list  = simple_align#tokenizer#LinesToTokensList(lines, "|", options)
+  let token_widths = simple_align#calculator#CalculateTokenWidths(tokens_list)
 
   let formatted_lines = [
   \   "aaa | b   | ccccc",
@@ -62,7 +62,7 @@ function s:format.aligns_tokens_with_1_space_around_each_delimiter_and_justifyin
   \   "え  | お  |",
   \ ]
 
-  call simple_align#formatter#format(firstlnum, tokens_list, token_widths, options)
+  call simple_align#formatter#Format(firstlnum, tokens_list, token_widths, options)
   call s:assert.equal(getline(firstlnum, lastlnum), formatted_lines)
 endfunction
 
@@ -71,10 +71,10 @@ function s:format.aligns_tokens_with_spaces_around_each_delimiter_depending_on_p
 
   let firstlnum    = 1
   let lastlnum     = firstlnum + 4
-  let lines        = simple_align#lines#get(firstlnum, lastlnum)
+  let lines        = simple_align#lines#Get(firstlnum, lastlnum)
   let options      = extend(copy(s:DEFAULT_OPTIONS), #{ lpadding: 0, rpadding: 0 })
-  let tokens_list  = simple_align#tokenizer#lines_to_tokens_list(lines, "|", options)
-  let token_widths = simple_align#calculator#calculate_token_widths(tokens_list)
+  let tokens_list  = simple_align#tokenizer#LinesToTokensList(lines, "|", options)
+  let token_widths = simple_align#calculator#CalculateTokenWidths(tokens_list)
 
   let formatted_lines = [
   \   "aaa|b  |ccccc",
@@ -84,7 +84,7 @@ function s:format.aligns_tokens_with_spaces_around_each_delimiter_depending_on_p
   \   "え |お |",
   \ ]
 
-  call simple_align#formatter#format(firstlnum, tokens_list, token_widths, options)
+  call simple_align#formatter#Format(firstlnum, tokens_list, token_widths, options)
   call s:assert.equal(getline(firstlnum, lastlnum), formatted_lines)
 endfunction
 
@@ -93,10 +93,10 @@ function s:format.aligns_tokens_with_justifying_to_right_if_right_justify_option
 
   let firstlnum    = 1
   let lastlnum     = firstlnum + 4
-  let lines        = simple_align#lines#get(firstlnum, lastlnum)
+  let lines        = simple_align#lines#Get(firstlnum, lastlnum)
   let options      = extend(copy(s:DEFAULT_OPTIONS), #{ justify: "right" })
-  let tokens_list  = simple_align#tokenizer#lines_to_tokens_list(lines, "|", options)
-  let token_widths = simple_align#calculator#calculate_token_widths(tokens_list)
+  let tokens_list  = simple_align#tokenizer#LinesToTokensList(lines, "|", options)
+  let token_widths = simple_align#calculator#CalculateTokenWidths(tokens_list)
 
   let formatted_lines = [
   \   "aaa |   b | ccccc",
@@ -106,7 +106,7 @@ function s:format.aligns_tokens_with_justifying_to_right_if_right_justify_option
   \   " え |  お |",
   \ ]
 
-  call simple_align#formatter#format(firstlnum, tokens_list, token_widths, options)
+  call simple_align#formatter#Format(firstlnum, tokens_list, token_widths, options)
   call s:assert.equal(getline(firstlnum, lastlnum), formatted_lines)
 endfunction
 
@@ -115,10 +115,10 @@ function s:format.ignores_lacked_columns() abort
 
   let firstlnum    = 1
   let lastlnum     = firstlnum + 5
-  let lines        = simple_align#lines#get(firstlnum, lastlnum)
+  let lines        = simple_align#lines#Get(firstlnum, lastlnum)
   let options      = s:DEFAULT_OPTIONS
-  let tokens_list  = simple_align#tokenizer#lines_to_tokens_list(lines, "|", options)
-  let token_widths = simple_align#calculator#calculate_token_widths(tokens_list)
+  let tokens_list  = simple_align#tokenizer#LinesToTokensList(lines, "|", options)
+  let token_widths = simple_align#calculator#CalculateTokenWidths(tokens_list)
 
   let formatted_lines = [
   \   "aaa | b   | ccccc",
@@ -129,7 +129,7 @@ function s:format.ignores_lacked_columns() abort
   \   "0   | 1",
   \ ]
 
-  call simple_align#formatter#format(firstlnum, tokens_list, token_widths, options)
+  call simple_align#formatter#Format(firstlnum, tokens_list, token_widths, options)
   call s:assert.equal(getline(firstlnum, lastlnum), formatted_lines)
 endfunction
 
@@ -138,10 +138,10 @@ function s:format.no_problem_even_if_each_line_starts_and_ends_with_delimiter() 
 
   let firstlnum    = 1
   let lastlnum     = firstlnum + 3
-  let lines        = simple_align#lines#get(firstlnum, lastlnum)
+  let lines        = simple_align#lines#Get(firstlnum, lastlnum)
   let options      = s:DEFAULT_OPTIONS
-  let tokens_list  = simple_align#tokenizer#lines_to_tokens_list(lines, "|", options)
-  let token_widths = simple_align#calculator#calculate_token_widths(tokens_list)
+  let tokens_list  = simple_align#tokenizer#LinesToTokensList(lines, "|", options)
+  let token_widths = simple_align#calculator#CalculateTokenWidths(tokens_list)
 
   let formatted_lines = [
   \   "| aaa | b   | ccccc |",
@@ -150,7 +150,7 @@ function s:format.no_problem_even_if_each_line_starts_and_ends_with_delimiter() 
   \   "| あ  | い  | う    |",
   \ ]
 
-  call simple_align#formatter#format(firstlnum, tokens_list, token_widths, options)
+  call simple_align#formatter#Format(firstlnum, tokens_list, token_widths, options)
   call s:assert.equal(getline(firstlnum, lastlnum), formatted_lines)
 endfunction
 
@@ -159,10 +159,10 @@ function s:format.aligns_tokens_with_with_keeping_each_line_indentation() abort
 
   let firstlnum    = 2
   let lastlnum     = firstlnum + 2
-  let lines        = simple_align#lines#get(firstlnum, lastlnum)
+  let lines        = simple_align#lines#Get(firstlnum, lastlnum)
   let options      = s:DEFAULT_OPTIONS
-  let tokens_list  = simple_align#tokenizer#lines_to_tokens_list(lines, "=", options)
-  let token_widths = simple_align#calculator#calculate_token_widths(tokens_list)
+  let tokens_list  = simple_align#tokenizer#LinesToTokensList(lines, "=", options)
+  let token_widths = simple_align#calculator#CalculateTokenWidths(tokens_list)
 
   let formatted_lines = [
   \   "  let a     = 1",
@@ -170,7 +170,7 @@ function s:format.aligns_tokens_with_with_keeping_each_line_indentation() abort
   \   "  let ccccc = 3",
   \ ]
 
-  call simple_align#formatter#format(firstlnum, tokens_list, token_widths, options)
+  call simple_align#formatter#Format(firstlnum, tokens_list, token_widths, options)
   call s:assert.equal(getline(firstlnum, lastlnum), formatted_lines)
 endfunction
 
@@ -179,10 +179,10 @@ function s:format.aligns_tokens_with_with_keeping_each_line_indentation_even_if_
 
   let firstlnum    = 2
   let lastlnum     = firstlnum + 2
-  let lines        = simple_align#lines#get(firstlnum, lastlnum)
+  let lines        = simple_align#lines#Get(firstlnum, lastlnum)
   let options      = s:DEFAULT_OPTIONS
-  let tokens_list  = simple_align#tokenizer#lines_to_tokens_list(lines, ":=", options)
-  let token_widths = simple_align#calculator#calculate_token_widths(tokens_list)
+  let tokens_list  = simple_align#tokenizer#LinesToTokensList(lines, ":=", options)
+  let token_widths = simple_align#calculator#CalculateTokenWidths(tokens_list)
 
   let formatted_lines = [
   \   "\ta     := 1",
@@ -190,7 +190,7 @@ function s:format.aligns_tokens_with_with_keeping_each_line_indentation_even_if_
   \   "\tccccc := 3",
   \ ]
 
-  call simple_align#formatter#format(firstlnum, tokens_list, token_widths, options)
+  call simple_align#formatter#Format(firstlnum, tokens_list, token_widths, options)
   call s:assert.equal(getline(firstlnum, lastlnum), formatted_lines)
 endfunction
 
@@ -199,13 +199,13 @@ function s:format.restores_lazyredraw_configuration() abort
 
   let firstlnum    = 1  " aaa | b | ccccc
   let lastlnum     = firstlnum
-  let lines        = simple_align#lines#get(firstlnum, lastlnum)
+  let lines        = simple_align#lines#Get(firstlnum, lastlnum)
   let options      = s:DEFAULT_OPTIONS
-  let tokens_list  = simple_align#tokenizer#lines_to_tokens_list(lines, "|", options)
-  let token_widths = simple_align#calculator#calculate_token_widths(tokens_list)
+  let tokens_list  = simple_align#tokenizer#LinesToTokensList(lines, "|", options)
+  let token_widths = simple_align#calculator#CalculateTokenWidths(tokens_list)
 
   let original_lazyredraw = &lazyredraw
-  call simple_align#formatter#format(firstlnum, tokens_list, token_widths, options)
+  call simple_align#formatter#Format(firstlnum, tokens_list, token_widths, options)
   call s:assert.equal(&lazyredraw, original_lazyredraw)
 endfunction
 
@@ -214,13 +214,13 @@ function s:format.restores_cursor_position() abort
 
   let firstlnum    = 1  " aaa | b | ccccc
   let lastlnum     = firstlnum
-  let lines        = simple_align#lines#get(firstlnum, lastlnum)
+  let lines        = simple_align#lines#Get(firstlnum, lastlnum)
   let options      = s:DEFAULT_OPTIONS
-  let tokens_list  = simple_align#tokenizer#lines_to_tokens_list(lines, "|", options)
-  let token_widths = simple_align#calculator#calculate_token_widths(tokens_list)
+  let tokens_list  = simple_align#tokenizer#LinesToTokensList(lines, "|", options)
+  let token_widths = simple_align#calculator#CalculateTokenWidths(tokens_list)
 
   call cursor(1, 5)
-  call simple_align#formatter#format(firstlnum, tokens_list, token_widths, options)
+  call simple_align#formatter#Format(firstlnum, tokens_list, token_widths, options)
   call s:assert.equal(line("."), 1)
   call s:assert.equal(col("."), 5)
 endfunction

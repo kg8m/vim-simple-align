@@ -430,7 +430,7 @@ Note: dein.vim's lazy loading feature with `on_cmd` option is not recommended fo
 Vim9 script
 --------------------------------------------------
 
-You can use Vim9 script version if you use Vim 8.2.2261+. Vim9 script version is 5-10 times faster than legacy Vim script version. Vim9 script version is available on [`vim9` branch](https://github.com/kg8m/vim-simple-align/tree/vim9).
+You can use Vim9 script version if you use Vim 8.2.4053+. Vim9 script version is 5-10 times faster than legacy Vim script version. Vim9 script version is available on [`vim9` branch](https://github.com/kg8m/vim-simple-align/tree/vim9).
 
 ```vim
 call dein#add("kg8m/vim-simple-align", { "rev": "vim9" })

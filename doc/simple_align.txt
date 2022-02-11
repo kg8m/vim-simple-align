@@ -101,7 +101,7 @@ also defines a dummy command.
 ==============================================================================
 Vim9 script                                     *vim-simple-align-vim9-script*
 
-You can use Vim9 script version if you use Vim 8.2.2261+. Vim9 script version
+You can use Vim9 script version if you use Vim 8.2.4053+. Vim9 script version
 is 5-10 times faster than legacy Vim script version. Vim9 script version is
 available on `vim9` branch.
 

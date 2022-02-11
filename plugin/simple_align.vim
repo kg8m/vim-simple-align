@@ -3,4 +3,4 @@ if exists("g:loaded_simple_align")
 endif
 let g:loaded_simple_align = 1
 
-command! -range -nargs=+ -complete=customlist,simple_align#options#completion_candidates SimpleAlign call simple_align#align(<line1>, <line2>, [<f-args>])
+command! -range -nargs=+ -complete=customlist,simple_align#options#CompletionCandidates SimpleAlign call simple_align#Align(<line1>, <line2>, [<f-args>])

@@ -10,7 +10,7 @@ let s:LINES =<< trim TXT
 TXT
 let s:DELIMITER = "|"
 
-let s:lines_to_tokens_list = themis#suite("simple_align#tokenizer#lines_to_tokens_list")
+let s:lines_to_tokens_list = themis#suite("simple_align#tokenizer#LinesToTokensList")
 function s:lines_to_tokens_list.returns_recursively_splitted_tokens_of_each_line_if_minus_1_count_option_given() abort
   let options = #{ count: -1 }
   let expected = [
@@ -21,7 +21,7 @@ function s:lines_to_tokens_list.returns_recursively_splitted_tokens_of_each_line
   \   ["lmnopq", "|", "56", "|", "⑦⑧⑨⑩", "|", "せそ"],
   \ ]
 
-  call s:assert.equal(simple_align#tokenizer#lines_to_tokens_list(s:LINES, s:DELIMITER, options), expected)
+  call s:assert.equal(simple_align#tokenizer#LinesToTokensList(s:LINES, s:DELIMITER, options), expected)
 endfunction
 
 function s:lines_to_tokens_list.returns_once_splitted_tokens_of_each_line_if_1_count_option_given() abort
@@ -34,7 +34,7 @@ function s:lines_to_tokens_list.returns_once_splitted_tokens_of_each_line_if_1_c
   \   ["lmnopq", "|", "56 | ⑦⑧⑨⑩ | せそ"],
   \ ]
 
-  call s:assert.equal(simple_align#tokenizer#lines_to_tokens_list(s:LINES, s:DELIMITER, options), expected)
+  call s:assert.equal(simple_align#tokenizer#LinesToTokensList(s:LINES, s:DELIMITER, options), expected)
 endfunction
 
 function s:lines_to_tokens_list.returns_twice_splitted_tokens_of_each_line_if_2_count_option_given() abort
@@ -47,7 +47,7 @@ function s:lines_to_tokens_list.returns_twice_splitted_tokens_of_each_line_if_2_
   \   ["lmnopq", "|", "56", "|", "⑦⑧⑨⑩ | せそ"],
   \ ]
 
-  call s:assert.equal(simple_align#tokenizer#lines_to_tokens_list(s:LINES, s:DELIMITER, options), expected)
+  call s:assert.equal(simple_align#tokenizer#LinesToTokensList(s:LINES, s:DELIMITER, options), expected)
 endfunction
 
 function s:lines_to_tokens_list.all_splitted_tokens_are_trimmed() abort
@@ -61,7 +61,7 @@ function s:lines_to_tokens_list.all_splitted_tokens_are_trimmed() abort
   \   ["ddddddddddddddddddd", "|", "eeeeeee", "|", "fffff"],
   \ ]
 
-  call s:assert.equal(simple_align#tokenizer#lines_to_tokens_list(lines, s:DELIMITER, options), expected)
+  call s:assert.equal(simple_align#tokenizer#LinesToTokensList(lines, s:DELIMITER, options), expected)
 endfunction
 
 function s:lines_to_tokens_list.no_problem_even_if_there_are_no_spaces() abort
@@ -75,7 +75,7 @@ function s:lines_to_tokens_list.no_problem_even_if_there_are_no_spaces() abort
   \   ["ddddddddddddddddddd", "|", "eeeeeee", "|", "fffff"],
   \ ]
 
-  call s:assert.equal(simple_align#tokenizer#lines_to_tokens_list(lines, s:DELIMITER, options), expected)
+  call s:assert.equal(simple_align#tokenizer#LinesToTokensList(lines, s:DELIMITER, options), expected)
 endfunction
 
 function s:lines_to_tokens_list.treats_first_token_as_empty_string_if_line_starts_with_delimiter() abort
@@ -89,7 +89,7 @@ function s:lines_to_tokens_list.treats_first_token_as_empty_string_if_line_start
   \   ["ddddddddddddddddddd", "|", "eeeeeee", "|", "fffff"],
   \ ]
 
-  call s:assert.equal(simple_align#tokenizer#lines_to_tokens_list(lines, s:DELIMITER, options), expected)
+  call s:assert.equal(simple_align#tokenizer#LinesToTokensList(lines, s:DELIMITER, options), expected)
 endfunction
 
 function s:lines_to_tokens_list.treats_first_token_as_empty_string_if_line_starts_with_spaces_and_delimiter() abort
@@ -103,7 +103,7 @@ function s:lines_to_tokens_list.treats_first_token_as_empty_string_if_line_start
   \   ["ddddddddddddddddddd", "|", "eeeeeee", "|", "fffff"],
   \ ]
 
-  call s:assert.equal(simple_align#tokenizer#lines_to_tokens_list(lines, s:DELIMITER, options), expected)
+  call s:assert.equal(simple_align#tokenizer#LinesToTokensList(lines, s:DELIMITER, options), expected)
 endfunction
 
 function s:lines_to_tokens_list.treats_last_token_as_empty_string_if_line_ends_with_spaces_and_delimiter() abort
@@ -117,7 +117,7 @@ function s:lines_to_tokens_list.treats_last_token_as_empty_string_if_line_ends_w
   \   ["ddddddddddddddddddd", "|", "eeeeeee", "|", "fffff"],
   \ ]
 
-  call s:assert.equal(simple_align#tokenizer#lines_to_tokens_list(lines, s:DELIMITER, options), expected)
+  call s:assert.equal(simple_align#tokenizer#LinesToTokensList(lines, s:DELIMITER, options), expected)
 endfunction
 
 function s:lines_to_tokens_list.treats_last_token_as_empty_string_if_line_ends_with_delimiter() abort
@@ -131,7 +131,7 @@ function s:lines_to_tokens_list.treats_last_token_as_empty_string_if_line_ends_w
   \   ["ddddddddddddddddddd", "|", "eeeeeee", "|", "fffff"],
   \ ]
 
-  call s:assert.equal(simple_align#tokenizer#lines_to_tokens_list(lines, s:DELIMITER, options), expected)
+  call s:assert.equal(simple_align#tokenizer#LinesToTokensList(lines, s:DELIMITER, options), expected)
 endfunction
 
 function s:lines_to_tokens_list.accepts_regular_expression_delimiter() abort
@@ -148,7 +148,7 @@ function s:lines_to_tokens_list.accepts_regular_expression_delimiter() abort
   \   ["foobar", "=", "3"],
   \ ]
 
-  call s:assert.equal(simple_align#tokenizer#lines_to_tokens_list(lines, delimiter, options), expected)
+  call s:assert.equal(simple_align#tokenizer#LinesToTokensList(lines, delimiter, options), expected)
 endfunction
 
 function s:lines_to_tokens_list.no_problem_even_if_each_line_column_number_is_different() abort
@@ -168,7 +168,7 @@ function s:lines_to_tokens_list.no_problem_even_if_each_line_column_number_is_di
   \   ["iii", "|", "jjj", "|", "kkk"],
   \ ]
 
-  call s:assert.equal(simple_align#tokenizer#lines_to_tokens_list(lines, s:DELIMITER, options), expected)
+  call s:assert.equal(simple_align#tokenizer#LinesToTokensList(lines, s:DELIMITER, options), expected)
 endfunction
 
 function s:lines_to_tokens_list.does_not_trim_delimiters() abort
@@ -182,7 +182,7 @@ function s:lines_to_tokens_list.does_not_trim_delimiters() abort
   \   ["lmnopq |",                " 56 ",     "| ⑦⑧⑨⑩ | せそ"],
   \ ]
 
-  call s:assert.equal(simple_align#tokenizer#lines_to_tokens_list(s:LINES, delimiter, options), expected)
+  call s:assert.equal(simple_align#tokenizer#LinesToTokensList(s:LINES, delimiter, options), expected)
 endfunction
 
 function s:lines_to_tokens_list.is_not_influenced_by_magic_configuration() abort
@@ -201,7 +201,7 @@ function s:lines_to_tokens_list.is_not_influenced_by_magic_configuration() abort
     \   ["lmnopq |",                " 56 ",     "| ⑦⑧⑨⑩ | せそ"],
     \ ]
 
-    call s:assert.equal(simple_align#tokenizer#lines_to_tokens_list(s:LINES, delimiter, options), expected)
+    call s:assert.equal(simple_align#tokenizer#LinesToTokensList(s:LINES, delimiter, options), expected)
   finally
     let &magic = original_magic
   endtry
@@ -214,7 +214,7 @@ function s:lines_to_tokens_list.accepts_very_magic_delimiter_pattern() abort
   let delimiter = '\v|'
 
   " E132: Function call depth is higher than 'maxfuncdepth'
-  Throws /:E132:/ :call simple_align#tokenizer#lines_to_tokens_list(lines, delimiter, options)
+  Throws /:E132:/ :call simple_align#tokenizer#LinesToTokensList(lines, delimiter, options)
 
   let delimiter = '\v\|'
   let expected = [
@@ -225,5 +225,5 @@ function s:lines_to_tokens_list.accepts_very_magic_delimiter_pattern() abort
   \   ["lmnopq", "|", "56", "|", "⑦⑧⑨⑩", "|", "せそ"],
   \ ]
 
-  call s:assert.equal(simple_align#tokenizer#lines_to_tokens_list(lines, delimiter, options), expected)
+  call s:assert.equal(simple_align#tokenizer#LinesToTokensList(lines, delimiter, options), expected)
 endfunction

@@ -1,6 +1,6 @@
 vim9script
 
-def simple_align#calculator#calculate_token_widths(tokens_list: list<list<string>>): list<number>
+export def CalculateTokenWidths(tokens_list: list<list<string>>): list<number>
   final widths = []
   var i: number
 
