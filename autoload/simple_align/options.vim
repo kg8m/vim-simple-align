@@ -94,7 +94,7 @@ export def IsShortOptionWithValue(argument: string): bool
 
   const short_name = ExtractShortName(argument)
 
-  if has_key(s:SHORT_NAMES, short_name)
+  if has_key(SHORT_NAMES, short_name)
     const name  = ShortNameToLongName(short_name)
     const value = ExtractValueFromShortOptionWithValue(argument)
 
@@ -147,5 +147,5 @@ def ExtractValueFromShortOptionWithValue(argument: string): string
 enddef
 
 def ShortNameToLongName(short_name: string): string
-  return get(s:SHORT_NAMES, short_name, short_name)
+  return get(SHORT_NAMES, short_name, short_name)
 enddef
