@@ -1,3 +1,9 @@
+[![Vim 8.2+](https://img.shields.io/badge/Vim-Support%208.2%2B-yellowgreen.svg?logo=vim)](https://github.com/vim/vim/tree/v8.2.0000)
+[![Neovim nightly](https://img.shields.io/badge/Neovim-Support%20nightly-yellowgreen.svg?logo=neovim&logoColor=white)](https://github.com/neovim/neovim)
+[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![test](https://github.com/kg8m/vim-simple-align/actions/workflows/test.yml/badge.svg)](https://github.com/kg8m/vim-simple-align/actions/workflows/test.yml)
+
+
 vim-simple-align
 ==================================================
 
