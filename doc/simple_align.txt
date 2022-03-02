@@ -1,4 +1,4 @@
-*vim-simple-align.txt*    A Vim plugin to align texts by simple way
+*vim-simple-align.txt*    A Vim/Neovim plugin to align texts by simple way
 
 ==============================================================================
 Table of Contents                         *vim-simple-align-table-of-contents*
@@ -14,7 +14,7 @@ Requirements    |vim-simple-align-requirements|
 ==============================================================================
 Summary                                             *vim-simple-align-summary*
 
-*vim-simple-align* is a Vim plugin to align texts by simple way.
+*vim-simple-align* is a Vim/Neovim plugin to align texts by simple way.
 
   * |vim-simple-align| provides only 1 command and a few its options
   * delimiter used to split texts is always Vim's regular expression

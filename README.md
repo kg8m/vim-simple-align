@@ -1,7 +1,7 @@
 vim-simple-align
 ==================================================
 
-A Vim plugin to align texts by simple way.
+A Vim/Neovim plugin to align texts by simple way.
 
 * vim-simple-align provides only 1 command and a few its options
   * no need to remember options because they can be completed
