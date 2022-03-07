@@ -16,7 +16,7 @@ enddef
 def Main(firstlnum: number, tokens_list: list<list<string>>, token_widths: list<number>, options: dict<any>): void
   const lastlnum = firstlnum + len(tokens_list) - 1
   const indent   = DetectIndent(firstlnum, lastlnum)
-  const lines    = mapnew(tokens_list, (index, tokens) => TokensToLine(firstlnum + index, indent, tokens, token_widths, options))
+  const lines    = mapnew(tokens_list, (index, tokens) => TokensToLine(indent, tokens, token_widths, options))
   setline(firstlnum, lines)
 enddef
 
@@ -43,7 +43,7 @@ def DetectIndent(firstlnum: number, lastlnum: number): string
   endif
 enddef
 
-def TokensToLine(lnum: number, indent: string, tokens: list<string>, token_widths: list<number>, options: dict<any>): string
+def TokensToLine(indent: string, tokens: list<string>, token_widths: list<number>, options: dict<any>): string
   var line = ""
 
   if token_widths[0] ># 0
