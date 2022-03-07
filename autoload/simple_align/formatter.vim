@@ -14,7 +14,7 @@ endfunction
 function s:format(firstlnum, tokens_list, token_widths, options) abort
   let lastlnum = a:firstlnum + len(a:tokens_list) - 1
   let indent   = s:detect_indent(a:firstlnum, lastlnum)
-  let lines    = map(copy(a:tokens_list), "s:tokens_to_line(a:firstlnum + v:key, indent, v:val, a:token_widths, a:options)")
+  let lines    = map(copy(a:tokens_list), "s:tokens_to_line(indent, v:val, a:token_widths, a:options)")
 
   call setline(a:firstlnum, lines)
 endfunction
@@ -42,7 +42,7 @@ function s:detect_indent(firstlnum, lastlnum) abort
   endif
 endfunction
 
-function s:tokens_to_line(lnum, indent, tokens, token_widths, options) abort
+function s:tokens_to_line(indent, tokens, token_widths, options) abort
   let line = ""
 
   if a:token_widths[0] ># 0
