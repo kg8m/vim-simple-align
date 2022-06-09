@@ -16,6 +16,7 @@ jobs:
         version:
           - nightly
           - v8.2.4053
+          - v8.2.5000
     steps:
       - uses: actions/checkout@v2
       - name: Setup Vim
