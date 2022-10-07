@@ -1,8 +1,10 @@
 vim9script
 
 export def Align(from_lnum: number, to_lnum: number, args: list<string>): void
-  const lines  = simple_align#lines#Get(from_lnum, to_lnum)
-  const parsed = simple_align#parser#Parse(args)
+  const lines = simple_align#lines#Get(from_lnum, to_lnum)
+  # FIXME: `: dict<any>` is a workaround for preventing an error `E1229: Expected dictionary for using key "delimiter)",
+  # but got any`, that may be Vim9 script's bug.
+  const parsed: dict<any> = simple_align#parser#Parse(args)
 
   if empty(parsed.delimiter)
     simple_align#logger#Error("Delimiter is not given.")
