@@ -12,9 +12,7 @@ export def Parse(args: list<string>): dict<any>
         const option_name = simple_align#options#ArgumentToName(item)
         option_waiting_for_value = option_name
       elseif simple_align#options#IsShortOptionWithValue(item)
-        # FIXME: `:dict<string>` is a workaround for preventing an error `E1229: Expected dictionary for using key
-        # "name)", but got any`, that may be Vim9 script's bug.
-        const extracted: dict<string> = simple_align#options#ExtractNameAndValue(item)
+        const extracted = simple_align#options#ExtractNameAndValue(item)
 
         if has_key(options, extracted.name)
           NotifyOptionValueOverwritten(extracted.name, options[extracted.name], extracted.value)
