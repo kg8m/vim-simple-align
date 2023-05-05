@@ -36,7 +36,7 @@ jobs:
           - neovim: false
             version: v8.2.0000
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Setup Vim
         uses: rhysd/action-setup-vim@v1
         id: vim
@@ -44,7 +44,7 @@ jobs:
           neovim: ${{ matrix.neovim }}
           version: ${{ matrix.version }}
       - name: Setup vim-themis
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: thinca/vim-themis
           path: vim-themis
