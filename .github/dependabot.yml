@@ -1,0 +1,12 @@
+# https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: saturday
+      time: "10:00"
+      timezone: Asia/Tokyo
+    reviewers:
+      - kg8m
