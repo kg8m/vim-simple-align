@@ -18,6 +18,7 @@ jobs:
           - false
         version:
           - nightly
+          - v9.0.2000
           - v9.0.1000
           - v9.0.0000
           - v8.2.5000
