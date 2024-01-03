@@ -40,6 +40,10 @@ jobs:
             version: v8.2.1000
           - neovim: false
             version: v8.2.0000
+    name: >-
+      Test --
+      ${{ matrix.neovim && 'Neovim' || 'Vim' }}
+      ${{ matrix.version }}
     steps:
       - uses: actions/checkout@v4
       - name: Setup Vim
