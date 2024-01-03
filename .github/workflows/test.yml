@@ -24,6 +24,10 @@ jobs:
           - v9.0.0000
           - v8.2.5000
           - v8.2.4053
+    name: >-
+      Test --
+      ${{ matrix.neovim && 'Neovim' || 'Vim' }}
+      ${{ matrix.version }}
     steps:
       - uses: actions/checkout@v4
       - name: Setup Vim
