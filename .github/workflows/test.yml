@@ -47,7 +47,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4.1.1
       - name: Setup Vim
-        uses: rhysd/action-setup-vim@v1.3.0
+        uses: rhysd/action-setup-vim@v1.3.1
         id: vim
         with:
           neovim: ${{ matrix.neovim }}
