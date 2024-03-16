@@ -408,4 +408,4 @@ call dein#add("kg8m/vim-simple-align", { "rev": "vim9" })
 
 ## Requirements
 
-Vim 8.2+ or Neovim nightly
+Vim 8.2.4053+
