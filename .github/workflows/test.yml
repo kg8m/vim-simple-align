@@ -45,15 +45,15 @@ jobs:
       ${{ matrix.neovim && 'Neovim' || 'Vim' }}
       ${{ matrix.version }}
     steps:
-      - uses: actions/checkout@v4.1.2
+      - uses: actions/checkout@v4
       - name: Setup Vim
-        uses: rhysd/action-setup-vim@v1.3.1
+        uses: rhysd/action-setup-vim@v1
         id: vim
         with:
           neovim: ${{ matrix.neovim }}
           version: ${{ matrix.version }}
       - name: Setup vim-themis
-        uses: actions/checkout@v4.1.2
+        uses: actions/checkout@v4
         with:
           repository: thinca/vim-themis
           path: vim-themis
