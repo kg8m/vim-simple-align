@@ -1,3 +1,0 @@
-# Disable formatting of quoted code embedded in a file because it breaks sample codes in the README.md.
-# https://prettier.io/docs/en/options.html#embedded-language-formatting
-embeddedLanguageFormatting: off
